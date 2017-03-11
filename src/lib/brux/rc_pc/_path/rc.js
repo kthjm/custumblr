@@ -20,8 +20,12 @@ export default {
                 console.log("/");
 
                 fetch("./page/1000/?format=json")
-                .then(res=>res.json())
-                .then(json=>console.log(json))
+                .then(res=>res.text())
+                .then(text=>console.log(JSON.parse(
+
+                    text.slice(text.indexOf("{"),text.lastIndexOf(";"))
+
+                )))
                 .catch(err=>console.error(err));
 
             }

@@ -28815,9 +28815,9 @@ exports.default = {
             console.log("/");
 
             fetch("./page/1000/?format=json").then(function (res) {
-                return res.json();
-            }).then(function (json) {
-                return console.log(json);
+                return res.text();
+            }).then(function (text) {
+                return console.log(JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf(";"))));
             }).catch(function (err) {
                 return console.error(err);
             });
