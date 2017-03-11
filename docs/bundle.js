@@ -28819,33 +28819,56 @@ exports.default = {
                     return res.text();
                 });
             })).then(function (texts) {
-                return console.log(texts.map(function (text) {
+
+                var response = texts.map(function (text) {
                     return JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf(";")));
-                }));
+                });
+
+                console.log(response);
+
+                history.pushState(null, null, response[2].posts[0].id);
+
+                window.dispatchEvent(new PopStateEvent("popstate"));
             }).catch(function (err) {
                 return console.error(err);
             });
+        }
+    }, {
+        condition: {
 
-            // fetch("./page/1/?format=json")
-            // .then(res=>res.text())
-            // .then(text=>console.log(JSON.parse(
-            //
-            //     text.slice(text.indexOf("{"),text.lastIndexOf(";"))
-            //
-            // )))
-            // .catch(err=>console.error(err));
-            //
-            // fetch("./page/1/?format=json")
-            // .then(res=>res.text())
-            // .then(text=>console.log(JSON.parse(
-            //
-            // 	text.slice(text.indexOf("{"),text.lastIndexOf(";"))
-            //
-            // ))).catch(err=>console.error(err));
+            type: "popstate",
+
+            path: "/:post_id"
+
+        },
+
+        query: [],
+
+        business: function business(e, clone, set, send) {
+
+            console.log(location.pathname);
         }
     }]
 
 };
+
+// fetch("./page/1/?format=json")
+// .then(res=>res.text())
+// .then(text=>console.log(JSON.parse(
+//
+//     text.slice(text.indexOf("{"),text.lastIndexOf(";"))
+//
+// )))
+// .catch(err=>console.error(err));
+//
+// fetch("./page/1/?format=json")
+// .then(res=>res.text())
+// .then(text=>console.log(JSON.parse(
+//
+// 	text.slice(text.indexOf("{"),text.lastIndexOf(";"))
+//
+// ))).catch(err=>console.error(err));
+
 module.exports = exports["default"];
 
 /***/ }),
