@@ -28802,6 +28802,8 @@ exports.default = {
     commands: [{
         condition: {
 
+            type: "popstate",
+
             path: "/"
 
         },
@@ -28811,6 +28813,14 @@ exports.default = {
         business: function business(e, clone, set, send) {
 
             console.log("/");
+
+            fetch("./page/1000/?format=json").then(function (res) {
+                return res.json();
+            }).then(function (json) {
+                return console.log(json);
+            }).catch(function (err) {
+                return console.error(err);
+            });
         }
     }]
 
