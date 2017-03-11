@@ -10,7 +10,7 @@ export default (br=>{
 
     br.device = device;
 
-    ["popstate","keydown"].forEach(event=>window.addEventListener(event,br.cq));
+    ["popstate"].forEach(event=>window.addEventListener(event,br.cq));
 
     console.log(br);
 
