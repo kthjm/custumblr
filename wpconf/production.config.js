@@ -1,12 +1,16 @@
+
+// const [front,app,js,stylus,asset] = (front=>[].concat(
+//
+//     [front,path.join(process.cwd(),"docs")],
+//
+//     ["js","stylus","asset"].map(type=>path.resolve(front,type))
+//
+// ))(path.join(process.cwd(),"src"));
+
 const path = require("path");
 
-const [front,app,js,stylus,asset] = (front=>[].concat(
-
-    [front,path.join(process.cwd(),"app","public")],
-
-    ["js","stylus","asset"].map(type=>path.resolve(front,type))
-
-))(path.join(process.cwd(),"src","front"));
+const src = path.join(process.cwd(),"src");
+const docs = path.join(process.cwd(),"docs");
 
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -37,7 +41,7 @@ module.exports = {
 
                 test : /\.jsx?$/,
 
-                include:[js],
+                include:[src],
 
                 // exclude:[path.resolve(process.cwd(),"node_modules")],
 
@@ -51,11 +55,11 @@ module.exports = {
 
     },
 
-    entry : `${js}/index`,
+    entry : `${src}/index`,
 
     output : {
 
-        path : `${app}/js`,
+        path : docs,
 
         filename : "bundle.js"
 
@@ -63,7 +67,7 @@ module.exports = {
 
     resolve : {
 
-        modules : ["node_modules",js],
+        modules : ["node_modules",src],
 
         extensions : [".js",".json",".jsx",".css"],
 
