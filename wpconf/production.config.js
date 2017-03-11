@@ -21,13 +21,13 @@ module.exports = {
 
         // new HtmlWebpackPlugin(),
 
-        new webpack.optimize.UglifyJsPlugin(),
-
-        new webpack.DefinePlugin({
-
-            "process.env":{NODE_ENV: JSON.stringify("production")}
-
-        })
+        // new webpack.optimize.UglifyJsPlugin(),
+        //
+        // new webpack.DefinePlugin({
+        //
+        //     "process.env":{NODE_ENV: JSON.stringify("production")}
+        //
+        // })
 
     ],
 
@@ -41,7 +41,7 @@ module.exports = {
 
                 test : /\.jsx?$/,
 
-                include:[src],
+                // include:[src],
 
                 // exclude:[path.resolve(process.cwd(),"node_modules")],
 

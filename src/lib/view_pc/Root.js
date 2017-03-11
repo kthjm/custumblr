@@ -26,7 +26,7 @@ export default class Root extends React.Component{
 
     componentDidMount(){
 
-        cq({type:"didmount"});
+        this.props.data.cq({type:"didmount"});
 
     }
 
@@ -48,7 +48,7 @@ export default class Root extends React.Component{
 
     componentDidUpdate(preprops,prestate){
 
-        cq({type:"didupdate"});
+        this.props.data.cq({type:"didupdate"});
 
     }
 
