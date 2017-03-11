@@ -28814,13 +28814,34 @@ exports.default = {
 
             console.log("/");
 
-            fetch("./page/1000/?format=json").then(function (res) {
-                return res.text();
-            }).then(function (text) {
-                return console.log(JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf(";"))));
+            Promise.all([1, 2, 3, 4, 5].map(function (num) {
+                return fetch("./page/" + num + "?format=json").then(function (res) {
+                    return res.text();
+                });
+            })).then(function (texts) {
+                return console.log(texts.map(function (text) {
+                    return JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf(";")));
+                }));
             }).catch(function (err) {
                 return console.error(err);
             });
+
+            // fetch("./page/1/?format=json")
+            // .then(res=>res.text())
+            // .then(text=>console.log(JSON.parse(
+            //
+            //     text.slice(text.indexOf("{"),text.lastIndexOf(";"))
+            //
+            // )))
+            // .catch(err=>console.error(err));
+            //
+            // fetch("./page/1/?format=json")
+            // .then(res=>res.text())
+            // .then(text=>console.log(JSON.parse(
+            //
+            // 	text.slice(text.indexOf("{"),text.lastIndexOf(";"))
+            //
+            // ))).catch(err=>console.error(err));
         }
     }]
 
