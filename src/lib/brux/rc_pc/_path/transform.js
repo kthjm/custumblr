@@ -1,5 +1,5 @@
 import {photo_transform} from "./transform_modules";
-import Map from "collections/map";
+// import Map from "collections/map";
 
 // "reblog-button",
 // "like-button"
