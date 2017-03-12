@@ -5,7 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cross-env NODE_ENV=production webpack"
+    "build": "cross-env NODE_ENV=production webpack",
+    "m": "node ./mg.js",
+    "add": "git add .",
+    "commit": "git commit",
+    "push": "git push origin master",
+    "gp": "run-s add commit -- {1} push"
   },
   "author": "",
   "license": "ISC",

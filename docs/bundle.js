@@ -28799,6 +28799,8 @@ var pop = new PopStateEvent("popstate");
 // const post = "post";
 var hispath = function hispath(path, replace) {
 
+    console.log(location.pathname + " => " + path);
+
     history[function () {
         if (replace) return "replace";else return "push";
     }() + "State"](null, null, path);
@@ -28828,6 +28830,8 @@ exports.default = {
 
         business: function business(e, clone, set, send) {
 
+            console.log("/");
+
             // Promise.all([1,2,3,4,5].map(num=>jsonFetch(`/page/${num}?format=json`)))
             // .then(jsons=>console.log(jsons))
             // .catch(err=>console.error(err));
@@ -28849,7 +28853,9 @@ exports.default = {
             jsonFetch(location.pathname + "?format=json").then(function (json) {
                 console.log(json);
                 console.log(clone);
-                clone.posts.concat(json.posts);
+                json.posts.forEach(function (post) {
+                    return clone.posts.push(post);
+                });
                 console.log(clone);
                 send();
             }).catch(function (err) {
@@ -28871,6 +28877,8 @@ exports.default = {
 
         business: function business(e, clone, set, send) {
 
+            console.log("/post/:id/:summary");
+
             console.log(location.pathname);
 
             var post_id = function (p) {
@@ -28881,7 +28889,8 @@ exports.default = {
 
             jsonFetch(post_id + "?format=json").then(function (json) {
                 console.log(clone);
-                clone.post = Object.assign({}, json.posts[0]);
+                set("post", json.posts[0]);
+                // clone.post = Object.assign({},json.posts[0]);
                 console.log(clone);
                 send();
             }).catch(function (err) {

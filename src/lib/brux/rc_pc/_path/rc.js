@@ -2,6 +2,8 @@ const pop = new PopStateEvent("popstate");
 // const post = "post";
 const hispath = (path,replace) => {
 
+    console.log(`${location.pathname} => ${path}`);
+
     history[`${(()=>{
         if(replace) return "replace";
         else return "push";
@@ -38,6 +40,8 @@ export default {
 
             business:(e,clone,set,send) => {
 
+                console.log("/");
+
                 // Promise.all([1,2,3,4,5].map(num=>jsonFetch(`/page/${num}?format=json`)))
                 // .then(jsons=>console.log(jsons))
                 // .catch(err=>console.error(err));
@@ -63,7 +67,7 @@ export default {
                 .then(json=>{
                     console.log(json);
                     console.log(clone);
-                    clone.posts.concat(json.posts);
+                    json.posts.forEach(post=>clone.posts.push(post))
                     console.log(clone);
                     send();
                 })
@@ -89,6 +93,8 @@ export default {
 
             business:(e,clone,set,send) => {
 
+                console.log("/post/:id/:summary");
+
                 console.log(location.pathname);
 
                 let post_id = (p=>(
@@ -100,7 +106,8 @@ export default {
                 jsonFetch(`${post_id}?format=json`)
                 .then(json=>{
                     console.log(clone);
-                    clone.post = Object.assign({},json.posts[0]);
+                    set("post",json.posts[0]);
+                    // clone.post = Object.assign({},json.posts[0]);
                     console.log(clone);
                     send();
                 })
