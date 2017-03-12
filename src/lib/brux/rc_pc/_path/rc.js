@@ -32,7 +32,7 @@ export default {
                 path:"/page/:num"
             },
 
-            query:["posts"],
+            query:["posts","page"],
 
             business:(e,clone,set,send) => {
 
@@ -46,6 +46,8 @@ export default {
                     json.posts.forEach(
                         post => clone.posts.push(transform(post))
                     );
+
+                    clone.page = (path=>path.slice(path.lastIndexOf("/")+1))(location.pathname);                    
 
                     send();
 

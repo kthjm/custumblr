@@ -28651,7 +28651,15 @@ var device = function (user) {
     if (user.indexOf("mobile") != -1) return "mobile";else return "pc";
 }(navigator.userAgent.toLowerCase());
 
-console.log(new Map([[3, 5], [2, 4], [8, 43]]).toObject());
+// console.log(
+//
+//     new Map([
+//         [3,5],
+//         [2,4],
+//         [8,43]
+//     ]).toObject()
+//
+// );
 
 exports.default = function (br) {
 
@@ -28831,7 +28839,7 @@ exports.default = {
             path: "/page/:num"
         },
 
-        query: ["posts"],
+        query: ["posts", "page"],
 
         business: function business(e, clone, set, send) {
 
@@ -28844,6 +28852,10 @@ exports.default = {
                 json.posts.forEach(function (post) {
                     return clone.posts.push((0, _transform2.default)(post));
                 });
+
+                clone.page = function (path) {
+                    return path.slice(path.lastIndexOf("/") + 1);
+                }(location.pathname);
 
                 send();
             }).catch(function (err) {
