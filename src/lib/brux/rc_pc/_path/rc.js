@@ -9,7 +9,7 @@ const hispath = (path,replace) => {
         else return "push";
     })()}State`](null,null,path);
 
-    window.dispatchEvent(pop);
+    setTimeout(()=>window.dispatchEvent(pop),0);
 
 };
 
