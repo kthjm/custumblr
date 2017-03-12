@@ -1,13 +1,67 @@
-const jsonFetch = path => (
+const default_keys = [
+    "id",
+    "reblog-key",
+    "date-gmt",
+    "reblog-button",
+    "like-button"
+];
 
-    fetch(path)
-    .then(res=>res.text())
-    .then(text=>JSON.parse(text.slice(
-        text.indexOf("{"),
-        text.lastIndexOf(";")
-    )))
+const transform = post => (obj=>{
 
-);
+    default_keys.forEach(key=>{
+        obj[key] = post[key];
+    });
+
+    keysOfTypes[post.type].forEach(key=>{
+        obj[key] = fns[key](post);
+    });
+
+    return obj;
+
+})({});
+
+const keysOfTypes = {
+
+    quote:[],
+    text:[],
+    photo:["photo"],
+    video:[],
+    audio:[]
+
+};
+
+const fns = {
+
+    photo : post => (arr=>{
+
+        if(post.photos.length) post.photos.forEach(
+            photo=>arr.push(photransform(photo))
+        );
+
+        else arr.push(photransform(photo));
+
+        return arr;
+
+    })([])
+
+};
+
+const photransform = photo => (obj=>{
+
+    [
+        "photo-url-1280",
+        "height",
+        "width"
+
+    ].forEach(key=>{
+
+        obj[key] = photo[key];
+
+    });
+
+    return obj;
+
+})({});
 
 export default {
 
@@ -20,11 +74,8 @@ export default {
                 type:"popstate",
                 path:"/"
             },
-
             query:[],
-
             business:(e,clone,set,send) => history.replaceState(null,null,"/page/1")
-
         },
 
         {
@@ -41,8 +92,15 @@ export default {
 
                 jsonFetch(`${location.pathname}?format=json`)
                 .then(json=>{
-                    json.posts.forEach(post=>clone.posts.push(post))
+
+                    json.posts.forEach(
+
+                        post=>clone.posts.push(transform(post))
+
+                    );
+
                     send();
+
                 }).catch(err=>console.error(err));
 
             }
@@ -67,7 +125,7 @@ export default {
 
                     jsonFetch(`${post_id}?format=json`)
                     .then(json=>{
-                        set("post",json.posts[0]);
+                        set("post",transform(json.posts[0]));
                         send();
                     }).catch(err=>console.error(err))
 
@@ -84,6 +142,70 @@ export default {
 
 }
 
+const jsonFetch = path => (
+
+    fetch(path)
+    .then(res=>res.text())
+    .then(text=>JSON.parse(text.slice(
+        text.indexOf("{"),
+        text.lastIndexOf(";")
+    )))
+
+);
+
+// const transforms = {
+//
+//     photo : post => (
+//
+//         obj=>{
+//
+//             obj.photo = (arr=>{
+//
+//                 if(post.photos.length) post.photos.forEach(
+//
+//                     photo=>arr.push(photransform(photo))
+//
+//                 );
+//
+//                 else arr.push(photransform(photo));
+//
+//                 return arr;
+//
+//             })([]);
+//
+//
+//
+//         }
+//
+//     )({})
+//
+// };
+//
+// const transformers = {};
+//
+// const photransform = photo => (obj=>{
+//
+//     [
+//         "photo-url-1280",
+//         "height",
+//         "width"
+//     ].forEach(key=>{
+//
+//         obj[key] = photo[key];
+//
+//     });
+//
+//     return obj;
+//
+// })({})
+//
+// const post_keys = {
+//
+//     default : [],
+//
+//     photo : [],
+//
+// }
 // const pop = new PopStateEvent("popstate");
 // const post = "post";
 // const hispath = (path,replace) => {

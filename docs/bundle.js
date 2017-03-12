@@ -28795,12 +28795,68 @@ module.exports = exports["default"];
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var jsonFetch = function jsonFetch(path) {
-    return fetch(path).then(function (res) {
-        return res.text();
-    }).then(function (text) {
-        return JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf(";")));
-    });
+var default_keys = ["id", "reblog-key", "date-gmt", "reblog-button", "like-button"];
+
+var transform = function transform(post) {
+    return function (obj) {
+
+        default_keys.forEach(function (key) {
+            obj[key] = post[key];
+        });
+
+        keysOfTypes[post.type].forEach(function (key) {
+            obj[key] = fns[key](post);
+        });
+
+        return obj;
+    }({});
+};
+
+var keysOfTypes = {
+
+    quote: [],
+    text: [],
+    photo: ["photo"],
+    video: [],
+    audio: []
+
+};
+
+var fns = {
+
+    photo: function (_photo) {
+        function photo(_x) {
+            return _photo.apply(this, arguments);
+        }
+
+        photo.toString = function () {
+            return _photo.toString();
+        };
+
+        return photo;
+    }(function (post) {
+        return function (arr) {
+
+            if (post.photos.length) post.photos.forEach(function (photo) {
+                return arr.push(photransform(photo));
+            });else arr.push(photransform(photo));
+
+            return arr;
+        }([]);
+    })
+
+};
+
+var photransform = function photransform(photo) {
+    return function (obj) {
+
+        ["photo-url-1280", "height", "width"].forEach(function (key) {
+
+            obj[key] = photo[key];
+        });
+
+        return obj;
+    }({});
 };
 
 exports.default = {
@@ -28812,13 +28868,10 @@ exports.default = {
             type: "popstate",
             path: "/"
         },
-
         query: [],
-
         business: function business(e, clone, set, send) {
             return history.replaceState(null, null, "/page/1");
         }
-
     }, {
         condition: {
             type: "popstate",
@@ -28832,9 +28885,11 @@ exports.default = {
             console.log("/page/:num");
 
             jsonFetch(location.pathname + "?format=json").then(function (json) {
+
                 json.posts.forEach(function (post) {
-                    return clone.posts.push(post);
+                    return clone.posts.push(transform(post));
                 });
+
                 send();
             }).catch(function (err) {
                 return console.error(err);
@@ -28855,7 +28910,7 @@ exports.default = {
 
             (function (post_id) {
                 return jsonFetch(post_id + "?format=json").then(function (json) {
-                    set("post", json.posts[0]);
+                    set("post", transform(json.posts[0]));
                     send();
                 }).catch(function (err) {
                     return console.error(err);
@@ -28869,6 +28924,68 @@ exports.default = {
 
 };
 
+
+var jsonFetch = function jsonFetch(path) {
+    return fetch(path).then(function (res) {
+        return res.text();
+    }).then(function (text) {
+        return JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf(";")));
+    });
+};
+
+// const transforms = {
+//
+//     photo : post => (
+//
+//         obj=>{
+//
+//             obj.photo = (arr=>{
+//
+//                 if(post.photos.length) post.photos.forEach(
+//
+//                     photo=>arr.push(photransform(photo))
+//
+//                 );
+//
+//                 else arr.push(photransform(photo));
+//
+//                 return arr;
+//
+//             })([]);
+//
+//
+//
+//         }
+//
+//     )({})
+//
+// };
+//
+// const transformers = {};
+//
+// const photransform = photo => (obj=>{
+//
+//     [
+//         "photo-url-1280",
+//         "height",
+//         "width"
+//     ].forEach(key=>{
+//
+//         obj[key] = photo[key];
+//
+//     });
+//
+//     return obj;
+//
+// })({})
+//
+// const post_keys = {
+//
+//     default : [],
+//
+//     photo : [],
+//
+// }
 // const pop = new PopStateEvent("popstate");
 // const post = "post";
 // const hispath = (path,replace) => {
