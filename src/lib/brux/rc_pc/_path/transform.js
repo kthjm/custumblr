@@ -43,33 +43,42 @@ const fns = {
 
         return arr;
 
-    })([]),
-
-    // ["photo-caption"] : post => post["photo-caption"],
-    //
-    // ["quote-text"] : post => post["quote-text"],
-    //
-    // ["quote-source"] : post => post["quote-source"]
+    })([])
 
 };
 
-module.exports = post => (
+module.exports = post => new Map([].concat(
 
-    new Map([].concat(
+    [].concat(default_keys,copyKeys[post.type])
+    .map(key=>[key,
+        post[key]
+    ]),
 
-        [].concat(default_keys,copyKeys[post.type])
-        .map(key=>[key,
-            post[key]
-        ]),
+    transformKeys[post.type]
+    .map(key=>[key,
+        fns[key](post)
+    ])
 
-        transformKeys[post.type]
-        .map(key=>[key,
-            fns[key](post)
-        ])
+)).toObject();
 
-    )).toObject()
 
-);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // let obj = {};
 // return obj;

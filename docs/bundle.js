@@ -28651,6 +28651,8 @@ var device = function (user) {
     if (user.indexOf("mobile") != -1) return "mobile";else return "pc";
 }(navigator.userAgent.toLowerCase());
 
+console.log(new Map([[3, 5], [2, 4], [8, 43]]).toObject());
+
 exports.default = function (br) {
 
     br.device = device;
@@ -29102,7 +29104,7 @@ exports.default = {
         photo_transform: function photo_transform(photo) {
                 return function (obj) {
 
-                        ["photo-url-1280", "height", "width"].forEach(function (key) {
+                        ["photo-url-1280", "photo-url-500", "height", "width"].forEach(function (key) {
 
                                 obj[key] = photo[key];
                         });

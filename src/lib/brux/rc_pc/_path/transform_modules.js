@@ -4,6 +4,7 @@ export default {
 
         [
             "photo-url-1280",
+            "photo-url-500",
             "height",
             "width"
 
