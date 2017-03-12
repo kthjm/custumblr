@@ -13,13 +13,13 @@ export default {
 
             },
 
-            query : [],
+            query : ["page"],
 
-            business : (e,query,set,end) => {
+            business : (e,clone,set,end) => {
 
-                console.log("i keydown!!");
+                history.replaceState(null,null,`/page/${clone.page + 1}`);
 
-                console.log(e);
+                window.dispatchEvent(new PopStateEvent("popstate"));
 
             }
 

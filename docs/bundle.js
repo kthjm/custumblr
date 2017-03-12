@@ -28665,7 +28665,7 @@ exports.default = function (br) {
 
     br.device = device;
 
-    ["popstate"].forEach(function (event) {
+    ["popstate", "keydown"].forEach(function (event) {
         return window.addEventListener(event, br.cq);
     });
 
@@ -28854,7 +28854,7 @@ exports.default = {
                 });
 
                 set("page", function (path) {
-                    return path.slice(path.lastIndexOf("/") + 1);
+                    return Number(path.slice(path.lastIndexOf("/") + 1));
                 }(location.pathname));
 
                 send();
@@ -29196,13 +29196,13 @@ exports.default = {
 
         },
 
-        query: [],
+        query: ["page"],
 
-        business: function business(e, query, set, end) {
+        business: function business(e, clone, set, end) {
 
-            console.log("i keydown!!");
+            history.replaceState(null, null, "/page/" + (clone.page + 1));
 
-            console.log(e);
+            window.dispatchEvent(new PopStateEvent("popstate"));
         }
 
     }]
