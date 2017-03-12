@@ -26,7 +26,9 @@ const keysOfTypes = {
     text:[],
     photo:["photo"],
     video:[],
-    audio:[]
+    audio:[],
+    link:[],
+    answer:[]
 
 };
 
@@ -93,6 +95,8 @@ export default {
                 jsonFetch(`${location.pathname}?format=json`)
                 .then(json=>{
 
+                    console.log(json);
+
                     json.posts.forEach(
 
                         post=>clone.posts.push(transform(post))
@@ -125,6 +129,7 @@ export default {
 
                     jsonFetch(`${post_id}?format=json`)
                     .then(json=>{
+                        console.log(json.posts[0]);
                         set("post",transform(json.posts[0]));
                         send();
                     }).catch(err=>console.error(err))

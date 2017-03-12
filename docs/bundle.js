@@ -28818,7 +28818,9 @@ var keysOfTypes = {
     text: [],
     photo: ["photo"],
     video: [],
-    audio: []
+    audio: [],
+    link: [],
+    answer: []
 
 };
 
@@ -28886,6 +28888,8 @@ exports.default = {
 
             jsonFetch(location.pathname + "?format=json").then(function (json) {
 
+                console.log(json);
+
                 json.posts.forEach(function (post) {
                     return clone.posts.push(transform(post));
                 });
@@ -28910,6 +28914,7 @@ exports.default = {
 
             (function (post_id) {
                 return jsonFetch(post_id + "?format=json").then(function (json) {
+                    console.log(json.posts[0]);
                     set("post", transform(json.posts[0]));
                     send();
                 }).catch(function (err) {
