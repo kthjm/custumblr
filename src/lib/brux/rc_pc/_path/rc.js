@@ -1,71 +1,15 @@
-const default_keys = [
-    "type",
-    "id",
-    "reblog-key",
-    "date-gmt"
-];
-// "reblog-button",
-// "like-button"
+import transform from "./transform";
 
-const transform = post => (obj=>{
+const jsonFetch = path => (
 
-    default_keys.forEach(key=>{
-        obj[key] = post[key];
-    });
+    fetch(path)
+    .then(res=>res.text())
+    .then(text=>JSON.parse(text.slice(
+        text.indexOf("{"),
+        text.lastIndexOf(";")
+    )))
 
-    keysOfTypes[post.type].forEach(key=>{
-        obj[key] = fns[key](post);
-    });
-
-    return obj;
-
-})({});
-
-const keysOfTypes = {
-
-    quote:[],
-    text:[],
-    photo:["photo"],
-    video:[],
-    audio:[],
-    link:[],
-    answer:[],
-    conversation:[]
-
-};
-
-const fns = {
-
-    photo : post => (arr=>{
-
-        if(post.photos.length) post.photos.forEach(
-            photo=>arr.push(photransform(photo))
-        );
-
-        else arr.push(photransform(post));
-
-        return arr;
-
-    })([])
-
-};
-
-const photransform = photo => (obj=>{
-
-    [
-        "photo-url-1280",
-        "height",
-        "width"
-
-    ].forEach(key=>{
-
-        obj[key] = photo[key];
-
-    });
-
-    return obj;
-
-})({});
+);
 
 export default {
 
@@ -100,9 +44,7 @@ export default {
                     console.log(json);
 
                     json.posts.forEach(
-
-                        post=>clone.posts.push(transform(post))
-
+                        post => clone.posts.push(transform(post))
                     );
 
                     send();
@@ -126,6 +68,7 @@ export default {
             business:(e,clone,set,send) => {
 
                 console.log("/post/:id/:summary");
+                // /post/148120701519/justintaco-i-dont-know-why-this-amuses-me-so
 
                 (post_id=>(
 
@@ -139,8 +82,7 @@ export default {
                 ))(
                     (p=>p.slice(0,p.lastIndexOf("/")))
                     (location.pathname)
-                );
-                // /post/148120701519/justintaco-i-dont-know-why-this-amuses-me-so
+                )
 
             }
         },
@@ -148,17 +90,6 @@ export default {
     ]
 
 }
-
-const jsonFetch = path => (
-
-    fetch(path)
-    .then(res=>res.text())
-    .then(text=>JSON.parse(text.slice(
-        text.indexOf("{"),
-        text.lastIndexOf(";")
-    )))
-
-);
 
 // const transforms = {
 //
