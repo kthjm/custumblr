@@ -47,7 +47,7 @@ export default {
                         post => clone.posts.push(transform(post))
                     );
 
-                    clone.page = (path=>path.slice(path.lastIndexOf("/")+1))(location.pathname);                    
+                    set("page",(path=>path.slice(path.lastIndexOf("/")+1))(location.pathname));
 
                     send();
 

@@ -28853,9 +28853,9 @@ exports.default = {
                     return clone.posts.push((0, _transform2.default)(post));
                 });
 
-                clone.page = function (path) {
+                set("page", function (path) {
                     return path.slice(path.lastIndexOf("/") + 1);
-                }(location.pathname);
+                }(location.pathname));
 
                 send();
             }).catch(function (err) {
