@@ -28795,19 +28795,6 @@ module.exports = exports["default"];
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var pop = new PopStateEvent("popstate");
-// const post = "post";
-var hispath = function hispath(path, replace) {
-
-    console.log(location.pathname + " => " + path);
-
-    history[function () {
-        if (replace) return "replace";else return "push";
-    }() + "State"](null, null, path);
-
-    // setTimeout(()=>window.dispatchEvent(pop),1000);
-};
-
 var jsonFetch = function jsonFetch(path) {
     return fetch(path).then(function (res) {
         return res.text();
@@ -28826,18 +28813,12 @@ exports.default = {
             path: "/"
         },
 
-        query: ["page"],
+        query: [],
 
         business: function business(e, clone, set, send) {
-
-            console.log("/");
-
-            // Promise.all([1,2,3,4,5].map(num=>jsonFetch(`/page/${num}?format=json`)))
-            // .then(jsons=>console.log(jsons))
-            // .catch(err=>console.error(err));
-
-            hispath("/page/1");
+            return history.replaceState(null, null, "/page/1");
         }
+
     }, {
         condition: {
             type: "popstate",
@@ -28851,20 +28832,13 @@ exports.default = {
             console.log("/page/:num");
 
             jsonFetch(location.pathname + "?format=json").then(function (json) {
-                console.log(json);
-                console.log(clone);
                 json.posts.forEach(function (post) {
                     return clone.posts.push(post);
                 });
-                console.log(clone);
                 send();
             }).catch(function (err) {
                 return console.error(err);
             });
-
-            // Promise.all([1,2,3,4,5].map(num=>jsonFetch(`/page/${num}?format=json`)))
-            // .then(jsons=>console.log(jsons))
-            // .catch(err=>console.error(err));
         }
     }, {
         condition: {
@@ -28879,28 +28853,36 @@ exports.default = {
 
             console.log("/post/:id/:summary");
 
-            console.log(location.pathname);
-
-            var post_id = function (p) {
+            (function (post_id) {
+                return jsonFetch(post_id + "?format=json").then(function (json) {
+                    set("post", json.posts[0]);
+                    send();
+                }).catch(function (err) {
+                    return console.error(err);
+                });
+            })(function (p) {
                 return p.slice(0, p.lastIndexOf("/"));
-            }(location.pathname);
-
-            console.log(post_id + "?format=json");
-
-            jsonFetch(post_id + "?format=json").then(function (json) {
-                console.log(clone);
-                set("post", json.posts[0]);
-                // clone.post = Object.assign({},json.posts[0]);
-                console.log(clone);
-                send();
-            }).catch(function (err) {
-                return console.error(err);
-            });
+            }(location.pathname));
+            // /post/148120701519/justintaco-i-dont-know-why-this-amuses-me-so
         }
     }]
 
 };
 
+// const pop = new PopStateEvent("popstate");
+// const post = "post";
+// const hispath = (path,replace) => {
+//
+//     console.log(`${location.pathname} => ${path}`);
+//
+//     history[`${(()=>{
+//         if(replace) return "replace";
+//         else return "push";
+//     })()}State`](null,null,path);
+//
+//     // setTimeout(()=>window.dispatchEvent(pop),1000);
+//
+// };
 // Promise.all(
 //     [1,2,3,4,5].map(num=>fetch(`./page/${num}?format=json`).then(res=>res.text()))
 // ).then(texts=>{
@@ -28939,7 +28921,7 @@ exports.default = {
 //         window.dispatchEvent(pop);
 //     }
 // }
-// "http://ttttthhhhhhheemeeeee.tumblr.com/post/148120701519/justintaco-i-dont-know-why-this-amuses-me-so"
+// "http://ttttthhhhhhheemeeeee.tumblr.com"
 
 
 // fetch("./page/1/?format=json")

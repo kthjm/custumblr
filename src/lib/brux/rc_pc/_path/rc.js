@@ -1,18 +1,3 @@
-const pop = new PopStateEvent("popstate");
-// const post = "post";
-const hispath = (path,replace) => {
-
-    console.log(`${location.pathname} => ${path}`);
-
-    history[`${(()=>{
-        if(replace) return "replace";
-        else return "push";
-    })()}State`](null,null,path);
-
-    // setTimeout(()=>window.dispatchEvent(pop),1000);
-
-};
-
 const jsonFetch = path => (
 
     fetch(path)
@@ -36,19 +21,10 @@ export default {
                 path:"/"
             },
 
-            query:["page"],
+            query:[],
 
-            business:(e,clone,set,send) => {
+            business:(e,clone,set,send) => history.replaceState(null,null,"/page/1")
 
-                console.log("/");
-
-                // Promise.all([1,2,3,4,5].map(num=>jsonFetch(`/page/${num}?format=json`)))
-                // .then(jsons=>console.log(jsons))
-                // .catch(err=>console.error(err));
-
-                hispath("/page/1");
-
-            }
         },
 
         {
@@ -65,17 +41,9 @@ export default {
 
                 jsonFetch(`${location.pathname}?format=json`)
                 .then(json=>{
-                    console.log(json);
-                    console.log(clone);
                     json.posts.forEach(post=>clone.posts.push(post))
-                    console.log(clone);
                     send();
-                })
-                .catch(err=>console.error(err));
-
-                // Promise.all([1,2,3,4,5].map(num=>jsonFetch(`/page/${num}?format=json`)))
-                // .then(jsons=>console.log(jsons))
-                // .catch(err=>console.error(err));
+                }).catch(err=>console.error(err));
 
             }
         },
@@ -95,23 +63,19 @@ export default {
 
                 console.log("/post/:id/:summary");
 
-                console.log(location.pathname);
+                (post_id=>(
 
-                let post_id = (p=>(
-                    p.slice(0,p.lastIndexOf("/"))
-                ))(location.pathname);
+                    jsonFetch(`${post_id}?format=json`)
+                    .then(json=>{
+                        set("post",json.posts[0]);
+                        send();
+                    }).catch(err=>console.error(err))
 
-                console.log(`${post_id}?format=json`);
-
-                jsonFetch(`${post_id}?format=json`)
-                .then(json=>{
-                    console.log(clone);
-                    set("post",json.posts[0]);
-                    // clone.post = Object.assign({},json.posts[0]);
-                    console.log(clone);
-                    send();
-                })
-                .catch(err=>console.error(err));
+                ))(
+                    (p=>p.slice(0,p.lastIndexOf("/")))
+                    (location.pathname)
+                );
+                // /post/148120701519/justintaco-i-dont-know-why-this-amuses-me-so
 
             }
         },
@@ -120,7 +84,20 @@ export default {
 
 }
 
-
+// const pop = new PopStateEvent("popstate");
+// const post = "post";
+// const hispath = (path,replace) => {
+//
+//     console.log(`${location.pathname} => ${path}`);
+//
+//     history[`${(()=>{
+//         if(replace) return "replace";
+//         else return "push";
+//     })()}State`](null,null,path);
+//
+//     // setTimeout(()=>window.dispatchEvent(pop),1000);
+//
+// };
 // Promise.all(
 //     [1,2,3,4,5].map(num=>fetch(`./page/${num}?format=json`).then(res=>res.text()))
 // ).then(texts=>{
@@ -159,7 +136,7 @@ export default {
 //         window.dispatchEvent(pop);
 //     }
 // }
-// "http://ttttthhhhhhheemeeeee.tumblr.com/post/148120701519/justintaco-i-dont-know-why-this-amuses-me-so"
+// "http://ttttthhhhhhheemeeeee.tumblr.com"
 
 
 
