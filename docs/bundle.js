@@ -28795,7 +28795,9 @@ module.exports = exports["default"];
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var default_keys = ["type", "id", "reblog-key", "date-gmt", "reblog-button", "like-button"];
+var default_keys = ["type", "id", "reblog-key", "date-gmt"];
+// "reblog-button",
+// "like-button"
 
 var transform = function transform(post) {
     return function (obj) {
@@ -28827,26 +28829,16 @@ var keysOfTypes = {
 
 var fns = {
 
-    photo: function (_photo) {
-        function photo(_x) {
-            return _photo.apply(this, arguments);
-        }
-
-        photo.toString = function () {
-            return _photo.toString();
-        };
-
-        return photo;
-    }(function (post) {
+    photo: function photo(post) {
         return function (arr) {
 
             if (post.photos.length) post.photos.forEach(function (photo) {
                 return arr.push(photransform(photo));
-            });else arr.push(photransform(photo));
+            });else arr.push(photransform(post));
 
             return arr;
         }([]);
-    })
+    }
 
 };
 

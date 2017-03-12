@@ -2,10 +2,10 @@ const default_keys = [
     "type",
     "id",
     "reblog-key",
-    "date-gmt",
-    "reblog-button",
-    "like-button"
+    "date-gmt"
 ];
+// "reblog-button",
+// "like-button"
 
 const transform = post => (obj=>{
 
@@ -42,7 +42,7 @@ const fns = {
             photo=>arr.push(photransform(photo))
         );
 
-        else arr.push(photransform(photo));
+        else arr.push(photransform(post));
 
         return arr;
 
