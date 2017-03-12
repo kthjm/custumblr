@@ -28796,7 +28796,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var pop = new PopStateEvent("popstate");
-
+// const post = "post";
 var jsonFetch = function jsonFetch(path) {
     return fetch(path).then(function (res) {
         return res.text();
@@ -28854,9 +28854,7 @@ exports.default = {
         condition: {
 
             type: "popstate",
-
-            path: "/post/:id",
-
+            path: "/post/:id/:summary",
             prevent: function prevent(e, clone) {}
 
         },
@@ -28867,42 +28865,47 @@ exports.default = {
 
             console.log(location.pathname);
 
-            jsonFetch(location.pathname + "?format=json").then(function (json) {
+            var post_id = function (p) {
+                return p.slice(0, p.lastIndexOf("/"));
+            }(location.pathname);
+
+            console.log(post_id + "?format=json");
+
+            jsonFetch(post_id + "?format=json").then(function (json) {
                 return console.log(json);
             }).catch(function (err) {
                 return console.error(err);
             });
         }
-    }, {
-        condition: {
-
-            type: "popstate",
-
-            path: "/:id",
-
-            prevent: function prevent(e, clone) {
-
-                if (location.pathname == "post") {
-                    console.log("still location.");
-                    return true;
-                }
-            }
-
-        },
-
-        query: [],
-
-        business: function business(e, clone, set, send) {
-
-            console.log(location.pathname + " => post" + location.pathname);
-
-            history.replaceState(null, null, "post" + location.pathname);
-
-            window.dispatchEvent(pop);
-        }
     }]
 
 };
+
+
+// {
+//     condition:{
+//
+//         type:"popstate",
+//         path:"/:id",
+//         prevent : (e,clone) => {
+//             if(location.pathname == "post"){
+//                 console.log("still location.");
+//                 return true;
+//             }
+//         }
+//
+//     },
+//
+//     query:[],
+//
+//     business:(e,clone,set,send) => {
+//         console.log(`${location.pathname} => post${location.pathname}`);
+//         history.replaceState(null,null,`post${location.pathname}`);
+//         window.dispatchEvent(pop);
+//     }
+// }
+
+"http://ttttthhhhhhheemeeeee.tumblr.com/post/148120701519/justintaco-i-dont-know-why-this-amuses-me-so";
 
 // fetch("./page/1/?format=json")
 // .then(res=>res.text())

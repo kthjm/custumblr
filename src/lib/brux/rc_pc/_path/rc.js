@@ -1,5 +1,5 @@
 const pop = new PopStateEvent("popstate");
-
+// const post = "post";
 const jsonFetch = path => (
 
     fetch(path)
@@ -61,9 +61,7 @@ export default {
             condition:{
 
                 type:"popstate",
-
-                path:"/post/:id",
-
+                path:"/post/:id/:summary",
                 prevent : (e,clone) => {}
 
             },
@@ -74,43 +72,43 @@ export default {
 
                 console.log(location.pathname);
 
-                jsonFetch(`${location.pathname}?format=json`)
+                let post_id = (p=>(
+
+                    p.slice(0,p.lastIndexOf("/"))
+
+                ))(location.pathname);
+
+                console.log(`${post_id}?format=json`);
+
+                jsonFetch(`${post_id}?format=json`)
                 .then(json=>console.log(json))
                 .catch(err=>console.error(err));
 
             }
         },
 
-        {
-            condition:{
-
-                type:"popstate",
-
-                path:"/:id",
-
-                prevent : (e,clone) => {
-
-                    if(location.pathname == "post"){
-                        console.log("still location.");
-                        return true;
-                    }
-
-                }
-
-            },
-
-            query:[],
-
-            business:(e,clone,set,send) => {
-
-                console.log(`${location.pathname} => post${location.pathname}`);
-
-                history.replaceState(null,null,`post${location.pathname}`);
-
-                window.dispatchEvent(pop);
-
-            }
-        }
+        // {
+        //     condition:{
+        //
+        //         type:"popstate",
+        //         path:"/:id",
+        //         prevent : (e,clone) => {
+        //             if(location.pathname == "post"){
+        //                 console.log("still location.");
+        //                 return true;
+        //             }
+        //         }
+        //
+        //     },
+        //
+        //     query:[],
+        //
+        //     business:(e,clone,set,send) => {
+        //         console.log(`${location.pathname} => post${location.pathname}`);
+        //         history.replaceState(null,null,`post${location.pathname}`);
+        //         window.dispatchEvent(pop);
+        //     }
+        // }
 
     ]
 
@@ -118,7 +116,7 @@ export default {
 
 
 
-
+"http://ttttthhhhhhheemeeeee.tumblr.com/post/148120701519/justintaco-i-dont-know-why-this-amuses-me-so"
 
 
 
