@@ -20,25 +20,30 @@ export default class Root extends React.Component{
     constructor(props){
 
         super(props);
-        this.state = {};
+
+        this.state = {
+
+            posts : [],
+
+            post : null
+
+        };
 
     }
 
-    componentDidMount(){
-
-        this.props.data.cq({type:"didmount"});
-
-    }
+    componentDidMount(){this.props.data.cq({type:"didmount"})}
 
     demand(){this.setState(brux.supply());}
 
     componentWillReceiveProps(nextprops){}
-
     shouldComponentUpdate(nextprops,nextstate){return true;}
-
     componentWillUpdate(nextprops,nextstate){}
 
-    stateStructurer(){}
+    stateStructurer(){
+
+
+
+    }
 
     render(){return(
 
@@ -46,10 +51,6 @@ export default class Root extends React.Component{
 
     )}
 
-    componentDidUpdate(preprops,prestate){
-
-        this.props.data.cq({type:"didupdate"});
-
-    }
+    componentDidUpdate(preprops,prestate){this.props.data.cq({type:"didupdate"})}
 
 }

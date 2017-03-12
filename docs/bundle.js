@@ -28795,6 +28795,16 @@ module.exports = exports["default"];
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+var pop = new PopStateEvent("popstate");
+
+var jsonFetch = function jsonFetch(path) {
+    return fetch(path).then(function (res) {
+        return res.text();
+    }).then(function (text) {
+        return JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf(";")));
+    });
+};
+
 exports.default = {
 
     cause: "_path",
@@ -28815,20 +28825,50 @@ exports.default = {
             console.log("/");
 
             Promise.all([1, 2, 3, 4, 5].map(function (num) {
-                return fetch("./page/" + num + "?format=json").then(function (res) {
-                    return res.text();
-                });
-            })).then(function (texts) {
+                return jsonFetch("/page/" + num + "?format=json");
+            })).then(function (jsons) {
+                return console.log(jsons);
+            }).catch(function (err) {
+                return console.error(err);
+            });
 
-                var response = texts.map(function (text) {
-                    return JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf(";")));
-                });
+            // Promise.all(
+            //     [1,2,3,4,5].map(num=>fetch(`./page/${num}?format=json`).then(res=>res.text()))
+            // ).then(texts=>{
+            //
+            //     let response = texts.map(text=>JSON.parse(
+            //         text.slice(text.indexOf("{"),text.lastIndexOf(";"))
+            //     ));
+            //
+            //     console.log(response);
+            //
+            //     history.pushState(null,null,response[2].posts[0].id);
+            //
+            //     window.dispatchEvent(new PopStateEvent("popstate"));
+            //
+            // })
+            // .catch(err=>console.error(err));
 
-                console.log(response);
+        }
+    }, {
+        condition: {
 
-                history.pushState(null, null, response[2].posts[0].id);
+            type: "popstate",
 
-                window.dispatchEvent(new PopStateEvent("popstate"));
+            path: "/post/:id",
+
+            prevent: function prevent(e, clone) {}
+
+        },
+
+        query: [],
+
+        business: function business(e, clone, set, send) {
+
+            console.log(location.pathname);
+
+            jsonFetch(location.pathname + "?format=json").then(function (json) {
+                return console.log(json);
             }).catch(function (err) {
                 return console.error(err);
             });
@@ -28838,7 +28878,15 @@ exports.default = {
 
             type: "popstate",
 
-            path: "/:post_id"
+            path: "/:id",
+
+            prevent: function prevent(e, clone) {
+
+                if (location.pathname == "post") {
+                    console.log("still location.");
+                    return true;
+                }
+            }
 
         },
 
@@ -28846,7 +28894,11 @@ exports.default = {
 
         business: function business(e, clone, set, send) {
 
-            console.log(location.pathname);
+            console.log(location.pathname + " => post" + location.pathname);
+
+            history.replaceState(null, null, "post" + location.pathname);
+
+            window.dispatchEvent(pop);
         }
     }]
 
@@ -29137,7 +29189,13 @@ var Root = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Root.__proto__ || Object.getPrototypeOf(Root)).call(this, props));
 
-        _this.state = {};
+        _this.state = {
+
+            posts: [],
+
+            post: null
+
+        };
 
         return _this;
     }
@@ -29145,7 +29203,6 @@ var Root = function (_React$Component) {
     _createClass(Root, [{
         key: "componentDidMount",
         value: function componentDidMount() {
-
             this.props.data.cq({ type: "didmount" });
         }
     }, {
@@ -29179,7 +29236,6 @@ var Root = function (_React$Component) {
     }, {
         key: "componentDidUpdate",
         value: function componentDidUpdate(preprops, prestate) {
-
             this.props.data.cq({ type: "didupdate" });
         }
     }]);
