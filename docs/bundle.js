@@ -28805,9 +28805,7 @@ var hispath = function hispath(path, replace) {
         if (replace) return "replace";else return "push";
     }() + "State"](null, null, path);
 
-    setTimeout(function () {
-        return window.dispatchEvent(pop);
-    }, 1000);
+    // setTimeout(()=>window.dispatchEvent(pop),1000);
 };
 
 var jsonFetch = function jsonFetch(path) {
