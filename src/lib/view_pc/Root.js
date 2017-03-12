@@ -23,6 +23,8 @@ export default class Root extends React.Component{
 
         this.state = {
 
+            page : 0,
+
             posts : [],
 
             post : null

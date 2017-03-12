@@ -1,5 +1,16 @@
 const pop = new PopStateEvent("popstate");
 // const post = "post";
+const hispath = (path,replace) => {
+
+    history[`${(()=>{
+        if(replace) return "replace";
+        else return "push";
+    })()}State`](null,null,path);
+
+    window.dispatchEvent(pop);
+
+};
+
 const jsonFetch = path => (
 
     fetch(path)
@@ -9,7 +20,7 @@ const jsonFetch = path => (
         text.lastIndexOf(";")
     )))
 
-)
+);
 
 export default {
 
@@ -19,40 +30,43 @@ export default {
 
         {
             condition:{
-
                 type:"popstate",
-
                 path:"/"
-
             },
 
-            query:[],
+            query:["page"],
 
             business:(e,clone,set,send) => {
 
-                console.log("/");
-
-                Promise.all([1,2,3,4,5].map(num=>jsonFetch(`/page/${num}?format=json`)))
-                .then(jsons=>console.log(jsons))
-                .catch(err=>console.error(err));
-
-                // Promise.all(
-                //     [1,2,3,4,5].map(num=>fetch(`./page/${num}?format=json`).then(res=>res.text()))
-                // ).then(texts=>{
-                //
-                //     let response = texts.map(text=>JSON.parse(
-                //         text.slice(text.indexOf("{"),text.lastIndexOf(";"))
-                //     ));
-                //
-                //     console.log(response);
-                //
-                //     history.pushState(null,null,response[2].posts[0].id);
-                //
-                //     window.dispatchEvent(new PopStateEvent("popstate"));
-                //
-                // })
+                // Promise.all([1,2,3,4,5].map(num=>jsonFetch(`/page/${num}?format=json`)))
+                // .then(jsons=>console.log(jsons))
                 // .catch(err=>console.error(err));
 
+                hispath("/page/1",true);
+
+            }
+        },
+
+        {
+            condition:{
+                type:"popstate",
+                path:"/page/:num"
+            },
+
+            query:["posts"],
+
+            business:(e,clone,set,send) => {
+
+                jsonFetch(`${location.pathname}?format=json`)
+                .then(json=>{
+                    clone.posts.concat(json.posts);
+                    send();
+                })
+                .catch(err=>console.error(err));
+
+                // Promise.all([1,2,3,4,5].map(num=>jsonFetch(`/page/${num}?format=json`)))
+                // .then(jsons=>console.log(jsons))
+                // .catch(err=>console.error(err));
 
             }
         },
@@ -62,61 +76,76 @@ export default {
 
                 type:"popstate",
                 path:"/post/:id/:summary",
-                prevent : (e,clone) => {}
+                // prevent : (e,clone) => {}
 
             },
 
-            query:[],
+            query:["post"],
 
             business:(e,clone,set,send) => {
 
                 console.log(location.pathname);
 
                 let post_id = (p=>(
-
                     p.slice(0,p.lastIndexOf("/"))
-
                 ))(location.pathname);
 
                 console.log(`${post_id}?format=json`);
 
                 jsonFetch(`${post_id}?format=json`)
-                .then(json=>console.log(json))
+                .then(json=>{
+                    clone.post = json.posts[0];
+                    send();
+                })
                 .catch(err=>console.error(err));
 
             }
         },
-
-        // {
-        //     condition:{
-        //
-        //         type:"popstate",
-        //         path:"/:id",
-        //         prevent : (e,clone) => {
-        //             if(location.pathname == "post"){
-        //                 console.log("still location.");
-        //                 return true;
-        //             }
-        //         }
-        //
-        //     },
-        //
-        //     query:[],
-        //
-        //     business:(e,clone,set,send) => {
-        //         console.log(`${location.pathname} => post${location.pathname}`);
-        //         history.replaceState(null,null,`post${location.pathname}`);
-        //         window.dispatchEvent(pop);
-        //     }
-        // }
 
     ]
 
 }
 
 
-
-"http://ttttthhhhhhheemeeeee.tumblr.com/post/148120701519/justintaco-i-dont-know-why-this-amuses-me-so"
+// Promise.all(
+//     [1,2,3,4,5].map(num=>fetch(`./page/${num}?format=json`).then(res=>res.text()))
+// ).then(texts=>{
+//
+//     let response = texts.map(text=>JSON.parse(
+//         text.slice(text.indexOf("{"),text.lastIndexOf(";"))
+//     ));
+//
+//     console.log(response);
+//
+//     history.pushState(null,null,response[2].posts[0].id);
+//
+//     window.dispatchEvent(new PopStateEvent("popstate"));
+//
+// })
+// .catch(err=>console.error(err));
+// {
+//     condition:{
+//
+//         type:"popstate",
+//         path:"/:id",
+//         prevent : (e,clone) => {
+//             if(location.pathname == "post"){
+//                 console.log("still location.");
+//                 return true;
+//             }
+//         }
+//
+//     },
+//
+//     query:[],
+//
+//     business:(e,clone,set,send) => {
+//         console.log(`${location.pathname} => post${location.pathname}`);
+//         history.replaceState(null,null,`post${location.pathname}`);
+//         window.dispatchEvent(pop);
+//     }
+// }
+// "http://ttttthhhhhhheemeeeee.tumblr.com/post/148120701519/justintaco-i-dont-know-why-this-amuses-me-so"
 
 
 

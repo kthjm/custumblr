@@ -28797,6 +28797,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 var pop = new PopStateEvent("popstate");
 // const post = "post";
+var hispath = function hispath(path, replace) {
+
+    history[function () {
+        if (replace) return "replace";else return "push";
+    }() + "State"](null, null, path);
+
+    window.dispatchEvent(pop);
+};
+
 var jsonFetch = function jsonFetch(path) {
     return fetch(path).then(function (res) {
         return res.text();
@@ -28811,55 +28820,49 @@ exports.default = {
 
     commands: [{
         condition: {
-
             type: "popstate",
-
             path: "/"
-
         },
 
-        query: [],
+        query: ["page"],
 
         business: function business(e, clone, set, send) {
 
-            console.log("/");
+            // Promise.all([1,2,3,4,5].map(num=>jsonFetch(`/page/${num}?format=json`)))
+            // .then(jsons=>console.log(jsons))
+            // .catch(err=>console.error(err));
 
-            Promise.all([1, 2, 3, 4, 5].map(function (num) {
-                return jsonFetch("/page/" + num + "?format=json");
-            })).then(function (jsons) {
-                return console.log(jsons);
+            hispath("/page/1", true);
+        }
+    }, {
+        condition: {
+            type: "popstate",
+            path: "/page/:num"
+        },
+
+        query: ["posts"],
+
+        business: function business(e, clone, set, send) {
+
+            jsonFetch(location.pathname + "?format=json").then(function (json) {
+                clone.posts.concat(json.posts);
+                send();
             }).catch(function (err) {
                 return console.error(err);
             });
 
-            // Promise.all(
-            //     [1,2,3,4,5].map(num=>fetch(`./page/${num}?format=json`).then(res=>res.text()))
-            // ).then(texts=>{
-            //
-            //     let response = texts.map(text=>JSON.parse(
-            //         text.slice(text.indexOf("{"),text.lastIndexOf(";"))
-            //     ));
-            //
-            //     console.log(response);
-            //
-            //     history.pushState(null,null,response[2].posts[0].id);
-            //
-            //     window.dispatchEvent(new PopStateEvent("popstate"));
-            //
-            // })
+            // Promise.all([1,2,3,4,5].map(num=>jsonFetch(`/page/${num}?format=json`)))
+            // .then(jsons=>console.log(jsons))
             // .catch(err=>console.error(err));
-
         }
     }, {
         condition: {
 
             type: "popstate",
-            path: "/post/:id/:summary",
-            prevent: function prevent(e, clone) {}
-
+            path: "/post/:id/:summary"
         },
 
-        query: [],
+        query: ["post"],
 
         business: function business(e, clone, set, send) {
 
@@ -28872,7 +28875,8 @@ exports.default = {
             console.log(post_id + "?format=json");
 
             jsonFetch(post_id + "?format=json").then(function (json) {
-                return console.log(json);
+                clone.post = json.posts[0];
+                send();
             }).catch(function (err) {
                 return console.error(err);
             });
@@ -28881,7 +28885,22 @@ exports.default = {
 
 };
 
-
+// Promise.all(
+//     [1,2,3,4,5].map(num=>fetch(`./page/${num}?format=json`).then(res=>res.text()))
+// ).then(texts=>{
+//
+//     let response = texts.map(text=>JSON.parse(
+//         text.slice(text.indexOf("{"),text.lastIndexOf(";"))
+//     ));
+//
+//     console.log(response);
+//
+//     history.pushState(null,null,response[2].posts[0].id);
+//
+//     window.dispatchEvent(new PopStateEvent("popstate"));
+//
+// })
+// .catch(err=>console.error(err));
 // {
 //     condition:{
 //
@@ -28904,8 +28923,8 @@ exports.default = {
 //         window.dispatchEvent(pop);
 //     }
 // }
+// "http://ttttthhhhhhheemeeeee.tumblr.com/post/148120701519/justintaco-i-dont-know-why-this-amuses-me-so"
 
-"http://ttttthhhhhhheemeeeee.tumblr.com/post/148120701519/justintaco-i-dont-know-why-this-amuses-me-so";
 
 // fetch("./page/1/?format=json")
 // .then(res=>res.text())
@@ -29193,6 +29212,8 @@ var Root = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Root.__proto__ || Object.getPrototypeOf(Root)).call(this, props));
 
         _this.state = {
+
+            page: 0,
 
             posts: [],
 
