@@ -46,7 +46,7 @@ export default {
                 // .then(jsons=>console.log(jsons))
                 // .catch(err=>console.error(err));
 
-                hispath("/page/1",true);
+                hispath("/page/1");
 
             }
         },
