@@ -57,9 +57,14 @@ export default {
 
             business:(e,clone,set,send) => {
 
+                console.log("/page/:num");
+
                 jsonFetch(`${location.pathname}?format=json`)
                 .then(json=>{
+                    console.log(json);
+                    console.log(clone);
                     clone.posts.concat(json.posts);
+                    console.log(clone);
                     send();
                 })
                 .catch(err=>console.error(err));
@@ -94,7 +99,9 @@ export default {
 
                 jsonFetch(`${post_id}?format=json`)
                 .then(json=>{
-                    clone.post = json.posts[0];
+                    console.log(clone);
+                    clone.post = Object.assign({},json.posts[0]);
+                    console.log(clone);
                     send();
                 })
                 .catch(err=>console.error(err));

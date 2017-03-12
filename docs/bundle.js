@@ -28844,8 +28844,13 @@ exports.default = {
 
         business: function business(e, clone, set, send) {
 
+            console.log("/page/:num");
+
             jsonFetch(location.pathname + "?format=json").then(function (json) {
+                console.log(json);
+                console.log(clone);
                 clone.posts.concat(json.posts);
+                console.log(clone);
                 send();
             }).catch(function (err) {
                 return console.error(err);
@@ -28875,7 +28880,9 @@ exports.default = {
             console.log(post_id + "?format=json");
 
             jsonFetch(post_id + "?format=json").then(function (json) {
-                clone.post = json.posts[0];
+                console.log(clone);
+                clone.post = Object.assign({}, json.posts[0]);
+                console.log(clone);
                 send();
             }).catch(function (err) {
                 return console.error(err);
