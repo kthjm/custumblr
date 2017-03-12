@@ -1,4 +1,5 @@
 const default_keys = [
+    "type",
     "id",
     "reblog-key",
     "date-gmt",
@@ -28,7 +29,8 @@ const keysOfTypes = {
     video:[],
     audio:[],
     link:[],
-    answer:[]
+    answer:[],
+    conversation:[]
 
 };
 

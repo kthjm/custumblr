@@ -28795,7 +28795,7 @@ module.exports = exports["default"];
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var default_keys = ["id", "reblog-key", "date-gmt", "reblog-button", "like-button"];
+var default_keys = ["type", "id", "reblog-key", "date-gmt", "reblog-button", "like-button"];
 
 var transform = function transform(post) {
     return function (obj) {
@@ -28820,7 +28820,8 @@ var keysOfTypes = {
     video: [],
     audio: [],
     link: [],
-    answer: []
+    answer: [],
+    conversation: []
 
 };
 
