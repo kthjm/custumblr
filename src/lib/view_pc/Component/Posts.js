@@ -25,4 +25,4 @@ module.exports = props => (({posts,cq})=>(
 
     </div>
 
-))(props);
+))(props)

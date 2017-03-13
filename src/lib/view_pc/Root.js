@@ -43,27 +43,18 @@ export default class Root extends React.Component{
     propsStructurer(){return {
 
         post : (post=>{
-
             if(post) return true;
-
             else return false;
-
         })(this.state.post),
 
         Post:{
-
             post:this.state.post,
-
             cq:this.props.br.cq
-
         },
 
         Posts:{
-
             posts:this.state.posts,
-
             cq:this.props.br.cq
-
         }
 
     }}

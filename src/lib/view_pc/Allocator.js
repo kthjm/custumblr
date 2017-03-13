@@ -9,12 +9,16 @@ module.exports = props => (({post,Post,Posts})=>(
 
         {(()=>{
 
-            if(post) return <Post {...Post} />
+            console.log(post);
+            console.log(Post);
+            console.log(Posts);
 
-            else return <Posts {...Posts} />
+            if(post) return <Post {...Post} />;
+
+            else return <Posts {...Posts} />;
 
         })()}
 
     </div>
 
-))(props);
+))(props)

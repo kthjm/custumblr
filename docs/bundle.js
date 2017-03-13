@@ -29424,19 +29424,23 @@ var _Post2 = _interopRequireDefault(_Post);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = function (props) {
-    return function (_ref) {
-        var post = _ref.post,
-            Post = _ref.Post,
-            Posts = _ref.Posts;
-        return _react2.default.createElement(
-            "div",
-            null,
-            function () {
+            return function (_ref) {
+                        var post = _ref.post,
+                            Post = _ref.Post,
+                            Posts = _ref.Posts;
+                        return _react2.default.createElement(
+                                    "div",
+                                    null,
+                                    function () {
 
-                if (post) return _react2.default.createElement(Post, Post);else return _react2.default.createElement(Posts, Posts);
-            }()
-        );
-    }(props);
+                                                console.log(post);
+                                                console.log(Post);
+                                                console.log(Posts);
+
+                                                if (post) return _react2.default.createElement(Post, Post);else return _react2.default.createElement(Posts, Posts);
+                                    }()
+                        );
+            }(props);
 };
 
 /***/ }),
@@ -29602,24 +29606,17 @@ var Root = function (_React$Component) {
             return {
 
                 post: function (post) {
-
                     if (post) return true;else return false;
                 }(this.state.post),
 
                 Post: {
-
                     post: this.state.post,
-
                     cq: this.props.br.cq
-
                 },
 
                 Posts: {
-
                     posts: this.state.posts,
-
                     cq: this.props.br.cq
-
                 }
 
             };

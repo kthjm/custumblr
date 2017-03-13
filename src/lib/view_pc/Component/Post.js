@@ -8,4 +8,4 @@ module.exports = props => (({post,cq})=>(
 
     </div>
 
-))(props);
+))(props)
