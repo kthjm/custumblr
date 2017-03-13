@@ -28908,7 +28908,7 @@ exports.default = {
                 })[0]];
             }(function (p) {
                 return p.slice(0, p.lastIndexOf("/"));
-            })(location.pathname));
+            }(location.pathname)));
         }
 
     }]

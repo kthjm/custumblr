@@ -99,7 +99,7 @@ export default {
 
                 clone.posts.filter(post=>post.id==post_id.slice(post_id.lastIndexOf("/")+1))[0]
 
-            ])(p=>p.slice(
+            ])((p=>p.slice(
 
                 0,p.lastIndexOf("/")
 
@@ -107,7 +107,7 @@ export default {
 
                 location.pathname
 
-            ))
+            )))
 
         },
 
