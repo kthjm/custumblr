@@ -1,3 +1,5 @@
+import React from "react";
+
 import Posts from "./Component/Posts";
 import Post from "./Component/Post";
 
