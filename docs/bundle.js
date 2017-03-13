@@ -28802,12 +28802,14 @@ exports.default = {
         query: ["posts"],
 
         business: function business(e, clone, set, send) {
-            var id = e.target.dataset.id;
+            return function (_ref) {
+                var id = _ref.id;
 
 
-            console.log(clone.posts.filter(function (post) {
-                return post.id == id;
-            })[0]);
+                history.pushState(null, null, "/post/" + id);
+
+                window.dispatchEvent(new PopStateEvent("popstate"));
+            }(e.target.dataset);
         }
     }]
 
@@ -29420,6 +29422,10 @@ module.exports = exports["default"];
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+            value: true
+});
+
 var _react = __webpack_require__(22);
 
 var _react2 = _interopRequireDefault(_react);
@@ -29434,7 +29440,7 @@ var _Posts2 = _interopRequireDefault(_Posts);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = function (props) {
+exports.default = function (props) {
             return function (_ref) {
                         var post = _ref.post,
                             Post = _ref.Post,
@@ -29450,6 +29456,8 @@ module.exports = function (props) {
             }(props);
 };
 
+module.exports = exports["default"];
+
 /***/ }),
 /* 224 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -29457,13 +29465,17 @@ module.exports = function (props) {
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _react = __webpack_require__(22);
 
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = function (props) {
+exports.default = function (props) {
     return function (_ref) {
         var post = _ref.post,
             cq = _ref.cq;
@@ -29478,6 +29490,8 @@ module.exports = function (props) {
         );
     }(props);
 };
+
+module.exports = exports["default"];
 
 /***/ }),
 /* 225 */
@@ -29519,34 +29533,6 @@ exports.default = function (props) {
         );
     }(props);
 };
-
-// module.exports = props => (({posts,cq})=>(
-//
-//     <div>
-//
-//         {posts.map(
-//
-//             post=>(
-//
-//                 <div
-//                     className="a_post"
-//                     data-id={post["id"]}
-//                     data-reblogKey={post["reblog-key"]}
-//                     key={`a_post_${post.id}`}
-//                     onClick={cq}
-//                 >
-//                     {post.id}
-//
-//                 </div>
-//
-//             )
-//
-//         )}
-//
-//     </div>
-//
-// ))(props)
-
 
 module.exports = exports["default"];
 

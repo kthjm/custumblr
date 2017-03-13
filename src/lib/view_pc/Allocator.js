@@ -3,7 +3,7 @@ import React from "react";
 import PostComponent from "./Component/Post";
 import PostsComponent from "./Component/Posts";
 
-module.exports = props => (({post,Post,Posts})=>(
+export default props => (({post,Post,Posts})=>(
 
     <div>
 

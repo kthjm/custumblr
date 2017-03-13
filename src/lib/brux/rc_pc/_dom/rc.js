@@ -15,13 +15,13 @@ export default {
 
             query:["posts"],
 
-            business:(e,clone,set,send) => {
+            business:(e,clone,set,send) => (({id})=>{
 
-                let {id} = e.target.dataset;
+                history.pushState(null,null,`/post/${id}`);
 
-                console.log(clone.posts.filter(post=>post.id==id)[0]);
+                window.dispatchEvent(new PopStateEvent("popstate"));
 
-            }
+            })(e.target.dataset)
         }
 
     ]
