@@ -29807,7 +29807,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var _ref = function () {
     return ["Head", "Post", "Posts"].map(function (type) {
-        return new _Alloc2.default(__webpack_require__(239)("./" + type + "/attr"), __webpack_require__(240)("./" + type + "/style"));
+        return new _Alloc2.default(__webpack_require__(239)("./" + type + "/attr"), __webpack_require__(240)("./" + type + "/style")).alloc;
     });
 }(),
     _ref2 = _slicedToArray(_ref, 3),

@@ -9,7 +9,7 @@ const [head_alloc,post_alloc,posts_alloc] = (()=>(
     .map(type=>new Alloc(
         require(`./${type}/attr`),
         require(`./${type}/style`)
-    ))
+    ).alloc)
 
 ))();
 
