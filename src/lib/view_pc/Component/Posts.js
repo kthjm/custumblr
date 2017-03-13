@@ -4,7 +4,7 @@ export default p => (({posts,cq})=>(<div>
 
     {posts.map(post=>(
 
-        <div {...attr("test",{cq:cq,post:post})}>
+        <div {...alloc("test",{cq:cq,post:post})}>
 
             {post.id}
 
@@ -14,33 +14,47 @@ export default p => (({posts,cq})=>(<div>
 
 </div>))(p)
 
-const attr = (name,{post,cq}) => Object.assign({},
+const alloc = (name,attr,style) => Object.assign(
 
-    {style:style[name]},
+    attr_alloc[name](attr),
 
-    (()=>{switch(name){
-
-        case "test" : return {
-
-            ["className"] : "a_post",
-
-            ["data-id"] : post["id"],
-
-            ["data-reblogKey"] : post["reblog-key"],
-
-            ["key"] : `a_post_${post.id}`,
-
-            ["onClick"] : cq
-
-        }
-
-    }})()
+    {style:style_alloc[name](style)}
 
 );
 
+const attr_alloc = {
+
+    test : ({post,cq}) => ({
+
+        ["className"] : "a_post",
+
+        ["data-id"] : post["id"],
+
+        ["data-reblogKey"] : post["reblog-key"],
+
+        ["key"] : `a_post_${post.id}`,
+
+        ["onClick"] : cq
+
+    })
+
+};
+
+const style_alloc = {
+
+    test : ({post}) => {switch(post.type){
+
+        case "quote":return style.test;
+
+        default:return style.test2;
+
+    }}
+
+};
+
 const style = {
 
-    "test":{
+    test : {
 
         padding : 30,
 
@@ -48,11 +62,19 @@ const style = {
 
         color : "#587357"
 
+    },
+
+    test2 : {
+
+        padding : 30,
+
+        fontSize : 40,
+
+        color : "#581157"
+
     }
 
-}
-
-
+};
 
 
 

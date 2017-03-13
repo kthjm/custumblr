@@ -29539,7 +29539,7 @@ module.exports = exports["default"];
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+        value: true
 });
 
 var _react = __webpack_require__(18);
@@ -29551,49 +29551,77 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 exports.default = function (p) {
-    return function (_ref) {
-        var posts = _ref.posts,
-            cq = _ref.cq;
-        return _react2.default.createElement(
-            "div",
-            null,
-            posts.map(function (post) {
+        return function (_ref) {
+                var posts = _ref.posts,
+                    cq = _ref.cq;
                 return _react2.default.createElement(
-                    "div",
-                    attr("test", { cq: cq, post: post }),
-                    post.id
+                        "div",
+                        null,
+                        posts.map(function (post) {
+                                return _react2.default.createElement(
+                                        "div",
+                                        alloc("test", { cq: cq, post: post }),
+                                        post.id
+                                );
+                        })
                 );
-            })
-        );
-    }(p);
+        }(p);
 };
 
-var attr = function attr(name, _ref2) {
-    var post = _ref2.post,
-        cq = _ref2.cq;
-    return Object.assign({}, { style: style[name] }, function () {
-        var _ref3;
+var alloc = function alloc(name, attr, style) {
+        return Object.assign(attr_alloc[name](attr), { style: style_alloc[name](style) });
+};
 
-        switch (name) {
+var attr_alloc = {
 
-            case "test":
+        test: function test(_ref2) {
+                var _ref3;
+
+                var post = _ref2.post,
+                    cq = _ref2.cq;
                 return _ref3 = {}, _defineProperty(_ref3, "className", "a_post"), _defineProperty(_ref3, "data-id", post["id"]), _defineProperty(_ref3, "data-reblogKey", post["reblog-key"]), _defineProperty(_ref3, "key", "a_post_" + post.id), _defineProperty(_ref3, "onClick", cq), _ref3;
-
         }
-    }());
+
+};
+
+var style_alloc = {
+
+        test: function test(_ref4) {
+                var post = _ref4.post;
+                switch (post.type) {
+
+                        case "quote":
+                                return style.test;
+
+                        default:
+                                return style.test2;
+
+                }
+        }
+
 };
 
 var style = {
 
-    "test": {
+        test: {
 
-        padding: 30,
+                padding: 30,
 
-        fontSize: 30,
+                fontSize: 30,
 
-        color: "#587357"
+                color: "#587357"
 
-    }
+        },
+
+        test2: {
+
+                padding: 30,
+
+                fontSize: 40,
+
+                color: "#581157"
+
+        }
 
 };
 
