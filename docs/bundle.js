@@ -29446,7 +29446,8 @@ exports.default = function (p) {
         return function (_ref) {
                 var post = _ref.post,
                     Post = _ref.Post,
-                    Posts = _ref.Posts;
+                    Posts = _ref.Posts,
+                    Head = _ref.Head;
                 return _react2.default.createElement(
                         "div",
                         null,

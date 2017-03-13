@@ -4,7 +4,7 @@ import HeadComponent from "./Component/Head";
 import PostComponent from "./Component/Post";
 import PostsComponent from "./Component/Posts";
 
-export default p => (({post,Post,Posts})=>(<div>
+export default p => (({post,Post,Posts,Head})=>(<div>
 
 
             <HeadComponent {...Head} />
