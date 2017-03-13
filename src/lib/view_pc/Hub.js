@@ -1,8 +1,8 @@
 import React from "react";
 
-import HeadComponent from "./Component/Head";
-import PostComponent from "./Component/Post";
-import PostsComponent from "./Component/Posts";
+import HeadComponent from "./Head/Component";
+import PostComponent from "./Post/Component";
+import PostsComponent from "./Posts/Component";
 
 export default p => (({post,Post,Posts,Head})=>(<div>
 

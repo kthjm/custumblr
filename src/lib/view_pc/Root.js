@@ -1,6 +1,6 @@
 import React from "react";
 import brux from "brux";
-import Allocator from "./Allocator";
+import Hub from "./Hub";
 
 export default class Root extends React.Component{
 
@@ -59,7 +59,7 @@ export default class Root extends React.Component{
 
     }}
 
-    render(){return(<div><Allocator {...this.propsStructurer()} /></div>)}
+    render(){return(<div><Hub {...this.propsStructurer()} /></div>)}
 
     componentDidUpdate(preprops,prestate){this.props.br.cq({type:"didupdate"})}
 
