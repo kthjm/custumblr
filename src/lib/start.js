@@ -20,7 +20,7 @@ const rendering = brls => render(
     ((Root,data)=>{
 
         if(brls) data.brls = brls;
-        return <Root data = {data} />;
+        return <Root {...data} />;
 
     })(
         require(`./view_${device}/Root`),

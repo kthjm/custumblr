@@ -23,74 +23,92 @@ export default {
                 path:"/"
             },
             query:[],
-            business:(e,clone,set,send) => history.replaceState(null,null,"/page/1")
+            business:(e,clone,set,send)=>history.replaceState(null,null,"/page/1")
         },
 
         {
+
             condition:{
                 type:"popstate",
                 path:"/page/:num"
             },
 
-            query:["posts","page"],
+            query:["posts","page","post"],
 
-            business:(e,clone,set,send) => {
+            business : (e,clone,set,send) => (num=>{
 
                 console.log("/page/:num");
 
+                if(num == clone.page){
+                    set("post",null);
+                    return send();
+                }
+
                 jsonFetch(`${location.pathname}?format=json`)
                 .then(json=>{
-
                     console.log(json);
-
-                    json.posts.forEach(
-                        post => clone.posts.push(transform(post))
-                    );
-
-                    set("page",(path=>Number(
-
-                        path.slice(path.lastIndexOf("/")+1)
-
-                    ))(location.pathname));
-
+                    json.posts.forEach(post=>clone.posts.push(transform(post)));
+                    json.posts.forEach(post=>console.log(post.type));
+                    set("page",num);
                     send();
+                }).catch(err=>console.log(err));
 
-                }).catch(err=>console.error(err));
+            })((path=>Number(
 
-            }
+                path.slice(path.lastIndexOf("/")+1)
+
+            ))(
+
+                location.pathname
+
+            ))
+
         },
 
         {
-            condition:{
 
+            condition:{
                 type:"popstate",
                 path:"/post/:id/:summary",
+                // /post/148120701519/justintaco-i-dont-know-why-this-amuses-me-so
                 // prevent : (e,clone) => {}
-
             },
 
-            query:["post"],
+            query:["posts","post"],
 
-            business:(e,clone,set,send) => {
+            business : (e,clone,set,send) => (([post_id,same])=>{
 
                 console.log("/post/:id/:summary");
-                // /post/148120701519/justintaco-i-dont-know-why-this-amuses-me-so
 
-                (post_id=>(
+                if(same){
+                    console.log(same);
+                    set("post",same);
+                    return end();
+                }
 
-                    jsonFetch(`${post_id}?format=json`)
-                    .then(json=>{
-                        console.log(json.posts[0]);
-                        set("post",transform(json.posts[0]));
-                        send();
-                    }).catch(err=>console.error(err))
+                jsonFetch(`${post_id}?format=json`)
+                .then(json=>{
+                    console.log(json.posts[0]);
+                    set("post",transform(json.posts[0]));
+                    send();
+                }).catch(err=>console.log(err));
 
-                ))(
-                    (p=>p.slice(0,p.lastIndexOf("/")))
-                    (location.pathname)
-                )
+            })((post_id=>[
 
-            }
+                post_id,
+
+                clone.posts.filter(post=>post.id==post_id.slice(post_id.lastIndexOf("/")+1))[0]
+
+            ])(p=>p.slice(
+
+                0,p.lastIndexOf("/")
+
+            ))(
+
+                location.pathname
+
+            ))
+
         },
 
     ]

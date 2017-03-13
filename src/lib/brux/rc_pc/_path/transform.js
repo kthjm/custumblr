@@ -1,10 +1,6 @@
 import {photo_transform} from "./transform_modules";
-// import Map from "collections/map";
 
-// "reblog-button",
-// "like-button"
-
-const default_keys = [
+const defaultKeys = [
     "type",
     "id",
     "reblog-key",
@@ -19,7 +15,8 @@ const copyKeys = {
     audio:[],
     link:[],
     answer:[],
-    conversation:[]
+    conversation:[],
+    regular:[]
 };
 
 const transformKeys = {
@@ -30,7 +27,8 @@ const transformKeys = {
     audio:[],
     link:[],
     answer:[],
-    conversation:[]
+    conversation:[],
+    regular:[]
 };
 
 const fns = {
@@ -43,13 +41,13 @@ const fns = {
 
         return arr;
 
-    })([])
+    })([]),
 
 };
 
 module.exports = post => new Map([].concat(
 
-    [].concat(default_keys,copyKeys[post.type])
+    [].concat(defaultKeys,copyKeys[post.type])
     .map(key=>[key,
         post[key]
     ]),
@@ -63,7 +61,9 @@ module.exports = post => new Map([].concat(
 
 
 
-
+// import Map from "collections/map";
+// "reblog-button",
+// "like-button"
 
 
 
@@ -83,7 +83,7 @@ module.exports = post => new Map([].concat(
 // let obj = {};
 // return obj;
 // [].concat(
-//     default_keys.map(key=>[key,post[key]]),
+//     defaultKeys.map(key=>[key,post[key]]),
 //     transformKeys[post.type].map(key=>[key,fns[key](post)])
 // ).forEach(key_value=>{
 //     let [key,value] = key_value;
@@ -91,7 +91,7 @@ module.exports = post => new Map([].concat(
 // });
 //
 
-// default_keys.forEach(key=>{
+// defaultKeys.forEach(key=>{
 //     obj[key] = post[key];
 // });
 //

@@ -4,12 +4,13 @@ import brux from "brux";
 export default class Root extends React.Component{
 
     componentWillMount(){
-        console.log(this.props.data.init);
+        console.log(this.props);
+        console.log(this.props.init);
         this.demand = this.demand.bind(this);
         brux.on_snatch(this.demand);
-        this.props.data.init(this.state);
-        delete this.props.data.init;
-        console.log(this.props.data.init);
+        this.props.init(this.state);
+        delete this.props.init;
+        console.log(this.props.init);
     }
 
     componentWillUnmount(){
