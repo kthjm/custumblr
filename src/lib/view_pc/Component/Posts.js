@@ -4,7 +4,7 @@ export default p => (({posts,cq})=>(<div>
 
     {posts.map(post=>(
 
-        <div {...attr("test",p)}>
+        <div {...attr("test",{cq:cq,post:post})}>
 
             {post.id}
 

@@ -29560,7 +29560,7 @@ exports.default = function (p) {
             posts.map(function (post) {
                 return _react2.default.createElement(
                     "div",
-                    attr("test", p),
+                    attr("test", { cq: cq, post: post }),
                     post.id
                 );
             })
