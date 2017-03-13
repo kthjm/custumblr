@@ -29096,6 +29096,8 @@ var fns = _defineProperty({}, "photo", function photo(post) {
 module.exports = function (post) {
     return new Map([].concat([].concat(defaultKeys, copyKeys[post.type]).map(function (key) {
         if (post[key]) return [key, post[key]];
+    }).filter(function (arr) {
+        return arr;
     }), transformKeys[post.type].map(function (key) {
         return [key, fns[key](post)];
     }))).toObject();

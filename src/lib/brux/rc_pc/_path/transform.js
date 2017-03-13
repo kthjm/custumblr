@@ -51,7 +51,7 @@ module.exports = post => new Map([].concat(
     [].concat(defaultKeys,copyKeys[post.type])
     .map(key=>{if(post[key]) return [key,
         post[key]
-    ]}),
+    ]}).filter(arr=>arr),
 
     transformKeys[post.type]
     .map(key=>[key,

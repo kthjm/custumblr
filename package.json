@@ -6,11 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "b": "cross-env NODE_ENV=production webpack",
-    "message": "node ./gitcomment.js",
+    "m": "node ./gitcomment.js",
     "add": "git add .",
     "commit": "git commit -F ./gitcomment.txt",
     "push": "git push origin master",
-    "git": "run-s add commit push"
+    "g": "run-s add commit push"
   },
   "author": "",
   "license": "ISC",
