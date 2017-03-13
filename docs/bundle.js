@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 228);
+/******/ 	return __webpack_require__(__webpack_require__.s = 231);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -13172,7 +13172,7 @@ var rendering = function rendering(brls) {
 
         if (brls) data.brls = brls;
         return _react2.default.createElement(Root, data);
-    }(__webpack_require__(224)("./view_" + _br.device + "/Root"), { br: { init: _br.init, cq: _br.cq, fin: _br.fin } }), document.getElementById("app"));
+    }(__webpack_require__(227)("./view_" + _br.device + "/Root"), { br: { init: _br.init, cq: _br.cq, fin: _br.fin } }), document.getElementById("app"));
 };
 
 // import Root from "./lib/Root";
@@ -28672,7 +28672,7 @@ exports.default = function (br) {
     console.log(br);
 
     return br;
-}(new _brux.Brother(__webpack_require__(225)("./rc_" + device + "/rcs")));
+}(new _brux.Brother(__webpack_require__(228)("./rc_" + device + "/rcs")));
 
 // import rcs from "./rcs";
 
@@ -28772,7 +28772,7 @@ Object.defineProperty(exports, "__esModule", {
 var causes = ["_dom", "_window", "_react", "_path"];
 
 exports.default = causes.map(function (cause) {
-  return __webpack_require__(226)("./" + cause + "/rc");
+  return __webpack_require__(229)("./" + cause + "/rc");
 });
 module.exports = exports["default"];
 
@@ -29255,7 +29255,7 @@ var causes = ["_dom", "_window", "_react", "_path"];
 exports.default = function () {
 
     var r = causes.map(function (cause) {
-        return __webpack_require__(227)("./" + cause + "/rc");
+        return __webpack_require__(230)("./" + cause + "/rc");
     });
 
     return r;
@@ -29372,6 +29372,84 @@ module.exports = exports["default"];
 "use strict";
 
 
+var _Posts = __webpack_require__(225);
+
+var _Posts2 = _interopRequireDefault(_Posts);
+
+var _Post = __webpack_require__(224);
+
+var _Post2 = _interopRequireDefault(_Post);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = function (props) {
+    return function (_ref) {
+        var page = _ref.page,
+            posts = _ref.posts,
+            post = _ref.post;
+        return React.createElement(
+            "div",
+            null,
+            function () {
+
+                if (post) return React.createElement(_Post2.default, post);else return React.createElement(_Posts2.default, { posts: posts });
+            }()
+        );
+    }(props);
+};
+
+/***/ }),
+/* 224 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (props) {
+    return function (post) {
+        return React.createElement(
+            "div",
+            null,
+            React.createElement(
+                "div",
+                null,
+                post.id
+            )
+        );
+    }(props);
+};
+
+/***/ }),
+/* 225 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (props) {
+    return function (_ref) {
+        var posts = _ref.posts;
+        return React.createElement(
+            "div",
+            null,
+            posts.map(function (post) {
+                return React.createElement(
+                    "div",
+                    null,
+                    post.id
+                );
+            })
+        );
+    }(props);
+};
+
+/***/ }),
+/* 226 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
@@ -29385,6 +29463,10 @@ var _react2 = _interopRequireDefault(_react);
 var _brux = __webpack_require__(37);
 
 var _brux2 = _interopRequireDefault(_brux);
+
+var _Allocator = __webpack_require__(223);
+
+var _Allocator2 = _interopRequireDefault(_Allocator);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29464,7 +29546,7 @@ var Root = function (_React$Component) {
             return _react2.default.createElement(
                 "div",
                 null,
-                "hello"
+                _react2.default.createElement(_Allocator2.default, this.state)
             );
         }
     }, {
@@ -29481,12 +29563,12 @@ exports.default = Root;
 module.exports = exports["default"];
 
 /***/ }),
-/* 224 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
 	"./view_mobile/Root": 222,
-	"./view_pc/Root": 223
+	"./view_pc/Root": 226
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -29502,11 +29584,11 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 224;
+webpackContext.id = 227;
 
 
 /***/ }),
-/* 225 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -29527,11 +29609,11 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 225;
+webpackContext.id = 228;
 
 
 /***/ }),
-/* 226 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -29554,11 +29636,11 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 226;
+webpackContext.id = 229;
 
 
 /***/ }),
-/* 227 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -29581,11 +29663,11 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 227;
+webpackContext.id = 230;
 
 
 /***/ }),
-/* 228 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

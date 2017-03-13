@@ -1,5 +1,6 @@
 import React from "react";
 import brux from "brux";
+import Allocator from "./Allocator";
 
 export default class Root extends React.Component{
 
@@ -42,15 +43,15 @@ export default class Root extends React.Component{
     shouldComponentUpdate(nextprops,nextstate){return true;}
     componentWillUpdate(nextprops,nextstate){}
 
-    stateStructurer(){
-
-
-
-    }
+    stateStructurer(){}
 
     render(){return(
 
-        <div>hello</div>
+        <div>
+
+            <Allocator {...this.state} />
+
+        </div>
 
     )}
 
