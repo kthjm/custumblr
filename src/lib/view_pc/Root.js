@@ -3,19 +3,16 @@ import brux from "brux";
 import Hub from "./Hub";
 import Alloc from "./Alloc";
 
-const [head_alloc,post_alloc,posts_alloc] = (()=>(
+const componentypes = ["Head","Post","Posts"];
 
-    ["Head","Post","Posts"]
-    .map(type=>new Alloc(
-        require(`./${type}/attr`),
-        require(`./${type}/style`)
-    ).alloc)
+const allocs = new Map(componentypes.map(
 
-))();
+    type => [type,new Alloc(...["attr","style"].map(as=>require(`./${type}/${as}`))).alloc]
 
-console.log(head_alloc);
-console.log(post_alloc);
-console.log(posts_alloc);
+));
+
+console.log(allocs);
+
 
 export default class Root extends React.Component{
 
@@ -51,34 +48,61 @@ export default class Root extends React.Component{
     shouldComponentUpdate(nextprops,nextstate){return true;}
     componentWillUpdate(nextprops,nextstate){}
 
-    propsStructurer(){return {
+    propStructure(){return {
 
-        post : (post=>{
+        post:(post=>{
             if(post) return true;
             else return false;
         })(this.state.post),
 
         Head:{
-            alloc:head_alloc,
+            alloc:allocs.get("Head"),
             cq:this.props.br.cq
         },
 
         Post:{
-            alloc:post_alloc,
+            alloc:allocs.get("Post"),
             post:this.state.post,
             cq:this.props.br.cq
         },
 
         Posts:{
-            alloc:posts_alloc,
+            alloc:allocs.get("Posts"),
             posts:this.state.posts,
             cq:this.props.br.cq
         }
 
     }}
 
-    render(){return(<div><Hub {...this.propsStructurer()} /></div>)}
+    render(){return(<div><Hub {...this.propStructure()} /></div>)}
 
     componentDidUpdate(preprops,prestate){this.props.br.cq({type:"didupdate"})}
 
 }
+
+
+// const allocs = (obj=>{
+//
+//     componentypes.forEach(type=>{
+//
+//         obj[type] = new Alloc(
+//
+//             ...["attr","style"].map(as=>require(`./${type}/${as}`))
+//
+//         ).alloc;
+//
+//     });
+//
+//     return obj;
+//
+// })({});
+// const [head_alloc,post_alloc,posts_alloc] = (()=>(
+//
+//     ["Head","Post","Posts"]
+//     .map(type=>new Alloc(
+//
+//     ).alloc)
+//
+// ))();
+// require(`./${type}/attr`),
+// require(`./${type}/style`)
