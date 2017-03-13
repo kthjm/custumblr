@@ -28860,7 +28860,10 @@ exports.default = {
                         return clone.posts.push((0, _transform2.default)(post));
                     });
                     json.posts.forEach(function (post) {
-                        return console.log(post.type);
+                        return console.log("\u2193" + post.type);
+                    });
+                    json.posts.forEach(function (post) {
+                        return console.log(post);
                     });
                     set("page", num);
                     send();
@@ -28876,7 +28879,7 @@ exports.default = {
 
         condition: {
             type: "popstate",
-            path: "/post/:id/:summary"
+            path: "/post/:id/:slug"
         },
 
         query: ["posts", "post"],
@@ -28887,7 +28890,7 @@ exports.default = {
                     post_id = _ref2[0],
                     same = _ref2[1];
 
-                console.log("/post/:id/:summary");
+                console.log("/post/:id/:slug");
 
                 if (same) {
                     console.log(same);
@@ -29053,18 +29056,18 @@ var _transform_modules = __webpack_require__(218);
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var defaultKeys = ["type", "id", "reblog-key", "date-gmt"];
+var defaultKeys = ["type", "id", "reblog-key", "date-gmt", "tags"];
 
 var copyKeys = {
     quote: ["quote-text", "quote-source"],
     text: [],
     photo: ["photo-caption"],
-    video: [],
-    audio: [],
-    link: [],
+    video: ["video-player-500", "video-caption"],
+    audio: ["audio-player"],
+    link: ["link-text", "link-url"],
     answer: [],
-    conversation: [],
-    regular: []
+    conversation: ["conversation-text", "conversation-title"],
+    regular: ["regular-body", "regular-title"]
 };
 
 var transformKeys = {
@@ -29092,7 +29095,7 @@ var fns = _defineProperty({}, "photo", function photo(post) {
 
 module.exports = function (post) {
     return new Map([].concat([].concat(defaultKeys, copyKeys[post.type]).map(function (key) {
-        return [key, post[key]];
+        if (post[key]) return [key, post[key]];
     }), transformKeys[post.type].map(function (key) {
         return [key, fns[key](post)];
     }))).toObject();

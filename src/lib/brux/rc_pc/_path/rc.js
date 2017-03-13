@@ -48,7 +48,8 @@ export default {
                 .then(json=>{
                     console.log(json);
                     json.posts.forEach(post=>clone.posts.push(transform(post)));
-                    json.posts.forEach(post=>console.log(post.type));
+                    json.posts.forEach(post=>console.log(`↓${post.type}`));
+                    json.posts.forEach(post=>console.log(post));
                     set("page",num);
                     send();
                 }).catch(err=>console.log(err));
@@ -69,7 +70,7 @@ export default {
 
             condition:{
                 type:"popstate",
-                path:"/post/:id/:summary",
+                path:"/post/:id/:slug",
                 // /post/148120701519/justintaco-i-dont-know-why-this-amuses-me-so
                 // prevent : (e,clone) => {}
             },
@@ -78,7 +79,7 @@ export default {
 
             business : (e,clone,set,send) => (([post_id,same])=>{
 
-                console.log("/post/:id/:summary");
+                console.log("/post/:id/:slug");
 
                 if(same){
                     console.log(same);

@@ -4,19 +4,20 @@ const defaultKeys = [
     "type",
     "id",
     "reblog-key",
-    "date-gmt"
+    "date-gmt",
+    "tags"
 ];
 
 const copyKeys = {
     quote:["quote-text","quote-source"],
     text:[],
     photo:["photo-caption"],
-    video:[],
-    audio:[],
-    link:[],
+    video:["video-player-500","video-caption"],
+    audio:["audio-player"],
+    link:["link-text","link-url"],
     answer:[],
-    conversation:[],
-    regular:[]
+    conversation:["conversation-text","conversation-title"],
+    regular:["regular-body","regular-title"]
 };
 
 const transformKeys = {
@@ -48,9 +49,9 @@ const fns = {
 module.exports = post => new Map([].concat(
 
     [].concat(defaultKeys,copyKeys[post.type])
-    .map(key=>[key,
+    .map(key=>{if(post[key]) return [key,
         post[key]
-    ]),
+    ]}),
 
     transformKeys[post.type]
     .map(key=>[key,
