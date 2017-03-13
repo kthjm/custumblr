@@ -5,17 +5,17 @@ export default class Root extends React.Component{
 
     componentWillMount(){
         console.log(this.props);
-        console.log(this.props.init);
+        console.log(this.props.br_init);
         this.demand = this.demand.bind(this);
         brux.on_snatch(this.demand);
-        this.props.init(this.state);
-        delete this.props.init;
-        console.log(this.props.init);
+        this.props.br_init(this.state);
+        delete this.props.br_init;
+        console.log(this.props.br_init);
     }
 
     componentWillUnmount(){
         brux.off_snatch(this.demand);
-        brother.fin();
+        brother.br_fin();
     }
 
     constructor(props){

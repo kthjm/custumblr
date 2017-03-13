@@ -24,7 +24,7 @@ const rendering = brls => render(
 
     })(
         require(`./view_${device}/Root`),
-        {init:init,cq:cq,fin:fin}
+        {br_init:init,cq:cq,br_fin:fin}
     ),
 
     document.getElementById("app")
