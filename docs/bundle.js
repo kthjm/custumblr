@@ -13172,7 +13172,7 @@ var rendering = function rendering(brls) {
 
         if (brls) data.brls = brls;
         return _react2.default.createElement(Root, data);
-    }(__webpack_require__(224)("./view_" + _br.device + "/Root"), { br_init: _br.init, cq: _br.cq, br_fin: _br.fin }), document.getElementById("app"));
+    }(__webpack_require__(224)("./view_" + _br.device + "/Root"), { br: { init: _br.init, cq: _br.cq, fin: _br.fin } }), document.getElementById("app"));
 };
 
 // import Root from "./lib/Root";
@@ -29396,18 +29396,18 @@ var Root = function (_React$Component) {
         key: "componentWillMount",
         value: function componentWillMount() {
             console.log(this.props);
-            console.log(this.props.br_init);
+            console.log(this.props.br);
             this.demand = this.demand.bind(this);
             _brux2.default.on_snatch(this.demand);
-            this.props.br_init(this.state);
-            delete this.props.br_init;
-            console.log(this.props.br_init);
+            this.props.br.init(this.state);
+            delete this.props.br.init;
+            console.log(this.props.br);
         }
     }, {
         key: "componentWillUnmount",
         value: function componentWillUnmount() {
             _brux2.default.off_snatch(this.demand);
-            brother.br_fin();
+            brother.fin();
         }
     }]);
 
