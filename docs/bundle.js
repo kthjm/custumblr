@@ -8694,7 +8694,7 @@ module.exports = getIteratorFn;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Alloc = Alloc;
+exports.default = Alloc;
 function Alloc(attr_alloc, style_alloc) {
 
     this.attr_alloc = attr_alloc;
@@ -8719,6 +8719,8 @@ Alloc.prototype.alloc = function (name, attr, style) {
 //     )
 //
 // );
+
+module.exports = exports["default"];
 
 /***/ }),
 /* 61 */

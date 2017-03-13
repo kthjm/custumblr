@@ -1,4 +1,4 @@
-export function Alloc(attr_alloc,style_alloc){
+export default function Alloc(attr_alloc,style_alloc){
 
     this.attr_alloc = attr_alloc;
 
