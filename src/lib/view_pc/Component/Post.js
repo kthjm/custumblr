@@ -1,11 +1,7 @@
 import React from "react";
 
-export default props => (({post,cq})=>(
+export default p => (({post,cq})=>(<div>
 
-    <div>
+    <div>{post.id}</div>
 
-        <div>{post.id}</div>
-
-    </div>
-
-))(props)
+</div>))(p)

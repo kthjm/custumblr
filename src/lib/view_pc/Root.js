@@ -21,13 +21,9 @@ export default class Root extends React.Component{
         super(props);
 
         this.state = {
-
             page : 0,
-
             posts : [],
-
             post : null
-
         };
 
     }
@@ -47,6 +43,10 @@ export default class Root extends React.Component{
             else return false;
         })(this.state.post),
 
+        Head:{
+            cq:this.props.br.cq
+        },
+
         Post:{
             post:this.state.post,
             cq:this.props.br.cq
@@ -59,15 +59,7 @@ export default class Root extends React.Component{
 
     }}
 
-    render(){return(
-
-        <div>
-
-            <Allocator {...this.propsStructurer()} />
-
-        </div>
-
-    )}
+    render(){return(<div><Allocator {...this.propsStructurer()} /></div>)}
 
     componentDidUpdate(preprops,prestate){this.props.br.cq({type:"didupdate"})}
 

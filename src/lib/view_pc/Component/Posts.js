@@ -1,28 +1,21 @@
 import React from "react";
 
-export default props => (({posts,cq})=>(
+export default p => (({posts,cq})=>(<div>
 
-    <div>
+    {posts.map(post=>(
 
-        {posts.map(
+        <div
+            className="a_post"
+            data-id={post["id"]}
+            data-reblogKey={post["reblog-key"]}
+            key={`a_post_${post.id}`}
+            onClick={cq}
+        >
 
-            post=>(
+            {post.id}
 
-                <div
-                    className="a_post"
-                    data-id={post["id"]}
-                    data-reblogKey={post["reblog-key"]}
-                    key={`a_post_${post.id}`}
-                    onClick={cq}
-                >
-                    {post.id}
+        </div>
 
-                </div>
+    ))}
 
-            )
-
-        )}
-
-    </div>
-
-))(props)
+</div>))(p)

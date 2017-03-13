@@ -5,16 +5,6 @@ const device = (user=>{
     else return "pc";
 })(navigator.userAgent.toLowerCase());
 
-// console.log(
-//
-//     new Map([
-//         [3,5],
-//         [2,4],
-//         [8,43]
-//     ]).toObject()
-//
-// );
-
 export default (br=>{
 
     br.device = device;
@@ -44,3 +34,12 @@ export default (br=>{
 // console.log(rcs);
 
 // const devices = ["pc","mobile"];
+// console.log(
+//
+//     new Map([
+//         [3,5],
+//         [2,4],
+//         [8,43]
+//     ]).toObject()
+//
+// );

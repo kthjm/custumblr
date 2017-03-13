@@ -45,13 +45,9 @@ export default {
                 }).catch(err=>console.log(err));
 
             })((path=>Number(
-
                 path.slice(path.lastIndexOf("/")+1)
-
             ))(
-
                 location.pathname
-
             ))
 
         },
@@ -64,23 +60,16 @@ export default {
                 // /post/148120701519/justintaco-i-dont-know-why-this-amuses-me-so
                 // prevent : (e,clone) => {}
             },
-
             query:[],
-
             business : (e,clone,set,send) => (post_id=>{
 
                 console.log("/post/:id/:slug");
-
                 history.replaceState(null,null,post_id);
 
             })((p=>p.slice(
-
                 0,p.lastIndexOf("/")
-
             ))(
-
                 location.pathname
-
             ))
 
         },
@@ -101,11 +90,13 @@ export default {
                 console.log("/post/:id");
 
                 if(same){
+                    console.log("same is exist");
                     console.log(same);
                     set("post",same);
                     return send();
                 }
 
+                console.log("same is not exist. so i fetch.");
                 jsonFetch(`${post_id}?format=json`)
                 .then(json=>{
                     console.log(json.posts[0]);
@@ -114,15 +105,10 @@ export default {
                 }).catch(err=>console.log(err));
 
             })((post_id=>[
-
                 post_id,
-
                 clone.posts.filter(post=>post.id==post_id.slice(post_id.lastIndexOf("/")+1))[0]
-
             ])(
-
                 location.pathname
-
             ))
 
         }

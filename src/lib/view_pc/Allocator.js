@@ -1,28 +1,28 @@
 import React from "react";
 
+import HeadComponent from "./Component/Head";
 import PostComponent from "./Component/Post";
 import PostsComponent from "./Component/Posts";
 
-export default props => (({post,Post,Posts})=>(
+export default p => (({post,Post,Posts})=>(<div>
 
-    <div>
 
-        {(()=>{
+            <HeadComponent {...Head} />
 
-            if(post) return(
+    {(()=>{
 
-                <PostComponent {...Post} />
+        if(post) return(
 
-            );
+            <PostComponent {...Post} />
 
-            else return(
+        );
 
-                <PostsComponent {...Posts} />
+        else return(
 
-            );
+            <PostsComponent {...Posts} />
 
-        })()}
+        );
 
-    </div>
+    })()}
 
-))(props)
+</div>))(p)
