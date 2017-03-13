@@ -13638,6 +13638,15 @@ var style = {
     }
 
 };
+
+// AccentColor:"#529ECC"
+// AvatarShape:"square"
+// BackgroundColor:"#36465d"
+// HeaderImage:"http://static.tumblr.com/cde615adb8927934b22c914cc8ec05e1/d1rkenh/7sooav1n4/tumblr_static_tumblr_static_7pcf47zlm4cgsck88oc004wgk_focused_v3.gif"
+// TitleColor:"#FFFFFF"
+// TitleFont:"'Gibson', sans-serif"
+// TitleFontWeight:"bold"
+
 module.exports = exports["default"];
 
 /***/ }),
@@ -13690,7 +13699,7 @@ var rendering = function rendering(brls) {
     }(__webpack_require__(235)("./view_" + _br.device + "/Root"), {
         br: { init: _br.init, cq: _br.cq, fin: _br.fin },
 
-        tv: window.tumblrVariable
+        tp: window.tumblrProps
     }), document.getElementById("app"));
 };
 

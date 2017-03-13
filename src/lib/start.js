@@ -28,7 +28,7 @@ const rendering = brls => render(
         {
             br:{init:init,cq:cq,fin:fin},
 
-            tv:window.tumblrVariable
+            tp:window.tumblrProps
         }
     ),
 
