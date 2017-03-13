@@ -4,7 +4,7 @@ export default p => (({posts,cq})=>(<div>
 
     {posts.map(post=>(
 
-        <div {...alloc("test",{cq:cq,post:post})}>
+        <div {...alloc("test",{cq:cq,post:post},{post:post})}>
 
             {post.id}
 

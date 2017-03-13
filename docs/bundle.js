@@ -29005,7 +29005,7 @@ exports.default = {
                     set("page", num);
                     send();
                 }).catch(function (err) {
-                    return console.log(err);
+                    return console.error(err);
                 });
             }(function (path) {
                 return Number(path.slice(path.lastIndexOf("/") + 1));
@@ -29059,7 +29059,7 @@ exports.default = {
                     set("post", (0, _modules.transform)(json.posts[0]));
                     send();
                 }).catch(function (err) {
-                    return console.log(err);
+                    return console.error(err);
                 });
             }(function (post_id) {
                 return [post_id, clone.posts.filter(function (post) {
@@ -29560,7 +29560,7 @@ exports.default = function (p) {
                         posts.map(function (post) {
                                 return _react2.default.createElement(
                                         "div",
-                                        alloc("test", { cq: cq, post: post }),
+                                        alloc("test", { cq: cq, post: post }, { post: post }),
                                         post.id
                                 );
                         })

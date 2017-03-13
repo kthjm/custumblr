@@ -42,7 +42,7 @@ export default {
                     });
                     set("page",num);
                     send();
-                }).catch(err=>console.log(err));
+                }).catch(err=>console.error(err));
 
             })((path=>Number(
                 path.slice(path.lastIndexOf("/")+1)
@@ -102,7 +102,7 @@ export default {
                     console.log(json.posts[0]);
                     set("post",transform(json.posts[0]));
                     send();
-                }).catch(err=>console.log(err));
+                }).catch(err=>console.error(err));
 
             })((post_id=>[
                 post_id,
