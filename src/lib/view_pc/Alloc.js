@@ -1,4 +1,4 @@
-export default function Alloc(attr_alloc,style_alloc){
+ function Alloc(attr_alloc,style_alloc){
 
     this.attr_alloc = attr_alloc;
 
@@ -8,9 +8,9 @@ export default function Alloc(attr_alloc,style_alloc){
 
 }
 
-Alloc.prototype.alloc = (name,attr,style) => (
+Alloc.prototype.alloc = function(name,attr,style){
 
-    Object.assign(
+    return Object.assign(
 
         this.attr_alloc[name](attr),
 
@@ -18,16 +18,6 @@ Alloc.prototype.alloc = (name,attr,style) => (
 
     )
 
-);
+};
 
-// export default (name,attr,style) => (
-//
-//     Object.assign(
-//
-//         attr_alloc[name](attr),
-//
-//         {style:style_alloc[name](style)}
-//
-//     )
-//
-// );
+module.exports = Alloc;

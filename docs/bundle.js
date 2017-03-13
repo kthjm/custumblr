@@ -8691,10 +8691,6 @@ module.exports = getIteratorFn;
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = Alloc;
 function Alloc(attr_alloc, style_alloc) {
 
     this.attr_alloc = attr_alloc;
@@ -8705,22 +8701,11 @@ function Alloc(attr_alloc, style_alloc) {
 }
 
 Alloc.prototype.alloc = function (name, attr, style) {
-    return Object.assign(undefined.attr_alloc[name](attr), { style: undefined.style_alloc[name](style) });
+
+    return Object.assign(this.attr_alloc[name](attr), { style: this.style_alloc[name](style) });
 };
 
-// export default (name,attr,style) => (
-//
-//     Object.assign(
-//
-//         attr_alloc[name](attr),
-//
-//         {style:style_alloc[name](style)}
-//
-//     )
-//
-// );
-
-module.exports = exports["default"];
+module.exports = Alloc;
 
 /***/ }),
 /* 61 */
