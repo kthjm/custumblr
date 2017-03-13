@@ -29548,6 +29548,8 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 exports.default = function (p) {
     return function (_ref) {
         var posts = _ref.posts,
@@ -29558,19 +29560,48 @@ exports.default = function (p) {
             posts.map(function (post) {
                 return _react2.default.createElement(
                     "div",
-                    {
-                        className: "a_post",
-                        "data-id": post["id"],
-                        "data-reblogKey": post["reblog-key"],
-                        key: "a_post_" + post.id,
-                        onClick: cq
-                    },
+                    attr("test", p),
                     post.id
                 );
             })
         );
     }(p);
 };
+
+var attr = function attr(name, _ref2) {
+    var post = _ref2.post,
+        cq = _ref2.cq;
+    return Object.assign({}, { style: style[name] }, function () {
+        var _ref3;
+
+        switch (name) {
+
+            case "test":
+                return _ref3 = {}, _defineProperty(_ref3, "className", "a_post"), _defineProperty(_ref3, "data-id", post["id"]), _defineProperty(_ref3, "data-reblogKey", post["reblog-key"]), _defineProperty(_ref3, "key", "a_post_" + post.id), _defineProperty(_ref3, "onClick", cq), _ref3;
+
+        }
+    }());
+};
+
+var style = {
+
+    "test": {
+
+        padding: 30,
+
+        fontSize: 30,
+
+        color: "#587357"
+
+    }
+
+};
+
+// className="a_post"
+// data-id={post["id"]}
+// data-reblogKey={post["reblog-key"]}
+// key={`a_post_${post.id}`}
+// onClick={cq}
 
 module.exports = exports["default"];
 
