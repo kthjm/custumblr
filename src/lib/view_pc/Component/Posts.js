@@ -1,6 +1,6 @@
 import React from "react";
 
-module.exports = props => (({posts})=>(
+module.exports = props => (({posts,cq})=>(
 
     <div>
 
@@ -8,7 +8,16 @@ module.exports = props => (({posts})=>(
 
             post=>(
 
-                <div>{post.id}</div>
+                <div
+                    className="a_post"
+                    data-id={post["id"]}
+                    data-reblogKey={post["reblog-key"]}
+                    key={`a_post_${post.id}`}
+                    onClick={cq}
+                >
+                    {post.id}
+
+                </div>
 
             )
 

@@ -40,13 +40,39 @@ export default class Root extends React.Component{
     shouldComponentUpdate(nextprops,nextstate){return true;}
     componentWillUpdate(nextprops,nextstate){}
 
-    stateStructurer(){}
+    propsStructurer(){return {
+
+        post : (post=>{
+
+            if(post) return true;
+
+            else return false;
+
+        })(this.state.post),
+
+        Post:{
+
+            post:this.state.post,
+
+            cq:this.props.br.cq
+
+        },
+
+        Posts:{
+
+            posts:this.state.posts,
+
+            cq:this.props.br.cq
+
+        }
+
+    }}
 
     render(){return(
 
         <div>
 
-            <Allocator {...this.state} />
+            <Allocator {...this.propsStructurer()} />
 
         </div>
 

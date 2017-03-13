@@ -28790,7 +28790,24 @@ exports.default = {
 
     cause: "_dom",
 
-    commands: []
+    commands: [{
+        condition: {
+
+            type: "click",
+
+            className: "a_post"
+
+        },
+
+        query: ["posts"],
+
+        business: function business(e, clone, set, send) {
+
+            console.log(e.target.dataset);
+
+            console.log(clone);
+        }
+    }]
 
 };
 module.exports = exports["default"];
@@ -29247,9 +29264,12 @@ exports.default = {
 
         business: function business(e, clone, set, end) {
 
-            history.replaceState(null, null, "/page/" + (clone.page + 1));
+            if (e.keyCode == 78) {
 
-            window.dispatchEvent(new PopStateEvent("popstate"));
+                history.replaceState(null, null, "/page/" + (clone.page + 1));
+
+                window.dispatchEvent(new PopStateEvent("popstate"));
+            }
         }
 
     }]
@@ -29405,15 +29425,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 module.exports = function (props) {
     return function (_ref) {
-        var page = _ref.page,
-            posts = _ref.posts,
-            post = _ref.post;
+        var post = _ref.post,
+            Post = _ref.Post,
+            Posts = _ref.Posts;
         return _react2.default.createElement(
             "div",
             null,
             function () {
 
-                if (post) return _react2.default.createElement(_Post2.default, post);else return _react2.default.createElement(_Posts2.default, { posts: posts });
+                if (post) return _react2.default.createElement(Post, Post);else return _react2.default.createElement(Posts, Posts);
             }()
         );
     }(props);
@@ -29433,7 +29453,9 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = function (props) {
-    return function (post) {
+    return function (_ref) {
+        var post = _ref.post,
+            cq = _ref.cq;
         return _react2.default.createElement(
             "div",
             null,
@@ -29461,14 +29483,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 module.exports = function (props) {
     return function (_ref) {
-        var posts = _ref.posts;
+        var posts = _ref.posts,
+            cq = _ref.cq;
         return _react2.default.createElement(
             "div",
             null,
             posts.map(function (post) {
                 return _react2.default.createElement(
                     "div",
-                    null,
+                    {
+                        className: "a_post",
+                        "data-id": post["id"],
+                        "data-reblogKey": post["reblog-key"],
+                        key: "a_post_" + post.id,
+                        onClick: cq
+                    },
                     post.id
                 );
             })
@@ -29568,15 +29597,40 @@ var Root = function (_React$Component) {
         key: "componentWillUpdate",
         value: function componentWillUpdate(nextprops, nextstate) {}
     }, {
-        key: "stateStructurer",
-        value: function stateStructurer() {}
+        key: "propsStructurer",
+        value: function propsStructurer() {
+            return {
+
+                post: function (post) {
+
+                    if (post) return true;else return false;
+                }(this.state.post),
+
+                Post: {
+
+                    post: this.state.post,
+
+                    cq: this.props.br.cq
+
+                },
+
+                Posts: {
+
+                    posts: this.state.posts,
+
+                    cq: this.props.br.cq
+
+                }
+
+            };
+        }
     }, {
         key: "render",
         value: function render() {
             return _react2.default.createElement(
                 "div",
                 null,
-                _react2.default.createElement(_Allocator2.default, this.state)
+                _react2.default.createElement(_Allocator2.default, this.propsStructurer())
             );
         }
     }, {

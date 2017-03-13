@@ -1,6 +1,6 @@
 import React from "react";
 
-module.exports = props => (post=>(
+module.exports = props => (({post,cq})=>(
 
     <div>
 

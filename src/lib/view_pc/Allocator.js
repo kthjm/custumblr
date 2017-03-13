@@ -3,15 +3,15 @@ import React from "react";
 import Posts from "./Component/Posts";
 import Post from "./Component/Post";
 
-module.exports = props => (({page,posts,post})=>(
+module.exports = props => (({post,Post,Posts})=>(
 
     <div>
 
         {(()=>{
 
-            if(post) return <Post {...post} />
+            if(post) return <Post {...Post} />
 
-            else return <Posts posts={posts} />
+            else return <Posts {...Posts} />
 
         })()}
 
