@@ -39,10 +39,9 @@ export default {
 
                 console.log("/page/:num");
 
-                if(num == clone.page){
-                    set("post",null);
-                    return send();
-                }
+                if(clone.post) set("post",null);
+
+                if(num == clone.page) return send();
 
                 jsonFetch(`${location.pathname}?format=json`)
                 .then(json=>{
@@ -75,16 +74,45 @@ export default {
                 // prevent : (e,clone) => {}
             },
 
+            query:[],
+
+            business : (e,clone,set,send) => (post_id=>{
+
+                console.log("/post/:id/:slug");
+
+                history.replaceState(null,null,post_id);
+
+            })((p=>p.slice(
+
+                0,p.lastIndexOf("/")
+
+            ))(
+
+                location.pathname
+
+            ))
+
+        },
+
+        {
+
+            condition:{
+                type:"popstate",
+                path:"/post/:id",
+                // /post/148120701519/
+                // prevent : (e,clone) => {}
+            },
+
             query:["posts","post"],
 
             business : (e,clone,set,send) => (([post_id,same])=>{
 
-                console.log("/post/:id/:slug");
+                console.log("/post/:id");
 
                 if(same){
                     console.log(same);
                     set("post",same);
-                    return end();
+                    return send();
                 }
 
                 jsonFetch(`${post_id}?format=json`)
@@ -100,17 +128,13 @@ export default {
 
                 clone.posts.filter(post=>post.id==post_id.slice(post_id.lastIndexOf("/")+1))[0]
 
-            ])((p=>p.slice(
-
-                0,p.lastIndexOf("/")
-
-            ))(
+            ])(
 
                 location.pathname
 
-            )))
+            ))
 
-        },
+        }
 
     ]
 

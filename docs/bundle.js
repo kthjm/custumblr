@@ -28849,10 +28849,9 @@ exports.default = {
 
                 console.log("/page/:num");
 
-                if (num == clone.page) {
-                    set("post", null);
-                    return send();
-                }
+                if (clone.post) set("post", null);
+
+                if (num == clone.page) return send();
 
                 jsonFetch(location.pathname + "?format=json").then(function (json) {
                     console.log(json);
@@ -28882,6 +28881,26 @@ exports.default = {
             path: "/post/:id/:slug"
         },
 
+        query: [],
+
+        business: function business(e, clone, set, send) {
+            return function (post_id) {
+
+                console.log("/post/:id/:slug");
+
+                history.replaceState(null, null, post_id);
+            }(function (p) {
+                return p.slice(0, p.lastIndexOf("/"));
+            }(location.pathname));
+        }
+
+    }, {
+
+        condition: {
+            type: "popstate",
+            path: "/post/:id"
+        },
+
         query: ["posts", "post"],
 
         business: function business(e, clone, set, send) {
@@ -28890,12 +28909,12 @@ exports.default = {
                     post_id = _ref2[0],
                     same = _ref2[1];
 
-                console.log("/post/:id/:slug");
+                console.log("/post/:id");
 
                 if (same) {
                     console.log(same);
                     set("post", same);
-                    return end();
+                    return send();
                 }
 
                 jsonFetch(post_id + "?format=json").then(function (json) {
@@ -28909,9 +28928,7 @@ exports.default = {
                 return [post_id, clone.posts.filter(function (post) {
                     return post.id == post_id.slice(post_id.lastIndexOf("/") + 1);
                 })[0]];
-            }(function (p) {
-                return p.slice(0, p.lastIndexOf("/"));
-            }(location.pathname)));
+            }(location.pathname));
         }
 
     }]
@@ -29498,13 +29515,10 @@ var Root = function (_React$Component) {
     _createClass(Root, [{
         key: "componentWillMount",
         value: function componentWillMount() {
-            console.log(this.props);
-            console.log(this.props.br);
             this.demand = this.demand.bind(this);
             _brux2.default.on_snatch(this.demand);
             this.props.br.init(this.state);
             delete this.props.br.init;
-            console.log(this.props.br);
         }
     }, {
         key: "componentWillUnmount",

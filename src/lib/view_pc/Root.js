@@ -5,13 +5,10 @@ import Allocator from "./Allocator";
 export default class Root extends React.Component{
 
     componentWillMount(){
-        console.log(this.props);
-        console.log(this.props.br);
         this.demand = this.demand.bind(this);
         brux.on_snatch(this.demand);
         this.props.br.init(this.state);
         delete this.props.br.init;
-        console.log(this.props.br);
     }
 
     componentWillUnmount(){
