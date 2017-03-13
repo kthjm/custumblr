@@ -29413,15 +29413,13 @@ var _react = __webpack_require__(22);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Posts = __webpack_require__(225);
-
-var _Posts2 = _interopRequireDefault(_Posts);
-
-var _Post = __webpack_require__(224);
-
-var _Post2 = _interopRequireDefault(_Post);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import Post from "./Component/Post";
+// import Posts from "./Component/Posts";
+
+var Post = __webpack_require__(224);
+var Posts = __webpack_require__(225);
 
 module.exports = function (props) {
             return function (_ref) {

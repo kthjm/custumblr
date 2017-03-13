@@ -1,7 +1,10 @@
 import React from "react";
 
-import Posts from "./Component/Posts";
-import Post from "./Component/Post";
+// import Post from "./Component/Post";
+// import Posts from "./Component/Posts";
+
+const Post = require("./Component/Post");
+const Posts = require("./Component/Posts");
 
 module.exports = props => (({post,Post,Posts})=>(
 
