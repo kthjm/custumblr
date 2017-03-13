@@ -29413,13 +29413,18 @@ var _react = __webpack_require__(22);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Post = __webpack_require__(224);
+
+var _Post2 = _interopRequireDefault(_Post);
+
+var _Posts = __webpack_require__(225);
+
+var _Posts2 = _interopRequireDefault(_Posts);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import Post from "./Component/Post";
-// import Posts from "./Component/Posts";
-
-var Post = __webpack_require__(224);
-var Posts = __webpack_require__(225);
+// const Post = require("./Component/Post");
+// const Posts = require("./Component/Posts");
 
 module.exports = function (props) {
             return function (_ref) {
@@ -29430,13 +29435,8 @@ module.exports = function (props) {
                                     "div",
                                     null,
                                     function () {
-                                                console.log(Post);
-                                                console.log(Posts);
-                                                console.log(post);
-                                                console.log(Post);
-                                                console.log(Posts);
 
-                                                if (post) return _react2.default.createElement(Post, Post);else return _react2.default.createElement(Posts, Posts);
+                                                if (post) return _react2.default.createElement(_Post2.default, Post);else return _react2.default.createElement(_Posts2.default, Posts);
                                     }()
                         );
             }(props);
