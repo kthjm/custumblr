@@ -11,14 +11,23 @@ module.exports = props => (({post,Post,Posts})=>(
     <div>
 
         {(()=>{
-
+            console.log(Post);
+            console.log(Posts);
             console.log(post);
             console.log(Post);
             console.log(Posts);
 
-            if(post) return <Post {...Post} />;
+            if(post) return(
 
-            else return <Posts {...Posts} />;
+                <Post {...Post} />
+
+            );
+
+            else return(
+
+                <Posts {...Posts} />
+
+            );
 
         })()}
 

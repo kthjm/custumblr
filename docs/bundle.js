@@ -29430,7 +29430,8 @@ module.exports = function (props) {
                                     "div",
                                     null,
                                     function () {
-
+                                                console.log(Post);
+                                                console.log(Posts);
                                                 console.log(post);
                                                 console.log(Post);
                                                 console.log(Posts);
