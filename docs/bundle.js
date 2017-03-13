@@ -29407,7 +29407,7 @@ var Root = function (_React$Component) {
         key: "componentWillUnmount",
         value: function componentWillUnmount() {
             _brux2.default.off_snatch(this.demand);
-            brother.fin();
+            this.props.br.fin();
         }
     }]);
 
@@ -29432,7 +29432,7 @@ var Root = function (_React$Component) {
     _createClass(Root, [{
         key: "componentDidMount",
         value: function componentDidMount() {
-            this.props.data.cq({ type: "didmount" });
+            this.props.br.cq({ type: "didmount" });
         }
     }, {
         key: "demand",
@@ -29465,7 +29465,7 @@ var Root = function (_React$Component) {
     }, {
         key: "componentDidUpdate",
         value: function componentDidUpdate(preprops, prestate) {
-            this.props.data.cq({ type: "didupdate" });
+            this.props.br.cq({ type: "didupdate" });
         }
     }]);
 

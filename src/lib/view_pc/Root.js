@@ -15,7 +15,7 @@ export default class Root extends React.Component{
 
     componentWillUnmount(){
         brux.off_snatch(this.demand);
-        brother.fin();
+        this.props.br.fin();
     }
 
     constructor(props){
@@ -34,7 +34,7 @@ export default class Root extends React.Component{
 
     }
 
-    componentDidMount(){this.props.data.cq({type:"didmount"})}
+    componentDidMount(){this.props.br.cq({type:"didmount"})}
 
     demand(){this.setState(brux.supply());}
 
@@ -54,6 +54,6 @@ export default class Root extends React.Component{
 
     )}
 
-    componentDidUpdate(preprops,prestate){this.props.data.cq({type:"didupdate"})}
+    componentDidUpdate(preprops,prestate){this.props.br.cq({type:"didupdate"})}
 
 }
