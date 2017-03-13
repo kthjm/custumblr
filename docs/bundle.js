@@ -29714,6 +29714,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var alloc = new _Alloc2.default(_attr2.default, _style2.default).alloc;
 
+console.log(alloc);
+
 exports.default = function (p) {
     return function (_ref) {
         var posts = _ref.posts,

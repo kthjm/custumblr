@@ -5,6 +5,8 @@ import attr from "./attr";
 import style from "./style";
 const alloc = new Alloc(attr,style).alloc;
 
+console.log(alloc);
+
 export default p => (({posts,cq})=>(<div>
 
     {posts.map(post=>(
