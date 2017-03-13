@@ -1,6 +1,21 @@
 import React from "react";
 import brux from "brux";
 import Hub from "./Hub";
+import Alloc from "./Alloc";
+
+const [head_alloc,post_alloc,posts_alloc] = (()=>(
+
+    ["Head","Post","Posts"]
+    .map(type=>new Alloc(
+        require(`./${type}/attr`),
+        require(`./${type}/style`)
+    ))
+
+))();
+
+console.log(head_alloc);
+console.log(post_alloc);
+console.log(posts_alloc);
 
 export default class Root extends React.Component{
 
@@ -44,15 +59,18 @@ export default class Root extends React.Component{
         })(this.state.post),
 
         Head:{
+            alloc:head_alloc,
             cq:this.props.br.cq
         },
 
         Post:{
+            alloc:post_alloc,
             post:this.state.post,
             cq:this.props.br.cq
         },
 
         Posts:{
+            alloc:posts_alloc,
             posts:this.state.posts,
             cq:this.props.br.cq
         }
