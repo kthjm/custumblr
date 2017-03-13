@@ -1,4 +1,4 @@
- function Alloc(attr_alloc,style_alloc){
+function Alloc(attr_alloc,style_alloc){
 
     this.attr_alloc = attr_alloc;
 

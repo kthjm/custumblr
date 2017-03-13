@@ -5,14 +5,9 @@ import Alloc from "./Alloc";
 
 const componentypes = ["Head","Post","Posts"];
 
-const allocs = new Map(componentypes.map(
-
-    type => [type,new Alloc(...["attr","style"].map(as=>require(`./${type}/${as}`))).alloc]
-
-));
-
-console.log(allocs);
-
+const allocs = new Map(componentypes.map(type=>[type,
+    new Alloc(...["attr","style"].map(as=>require(`./${type}/${as}`))).alloc
+]));
 
 export default class Root extends React.Component{
 
@@ -29,15 +24,12 @@ export default class Root extends React.Component{
     }
 
     constructor(props){
-
         super(props);
-
         this.state = {
             page : 0,
             posts : [],
             post : null
         };
-
     }
 
     componentDidMount(){this.props.br.cq({type:"didmount"})}

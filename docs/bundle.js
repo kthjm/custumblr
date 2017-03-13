@@ -8724,11 +8724,6 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import Alloc from "../Alloc";
-// import attr from "./attr";
-// import style from "./style";
-// const alloc = new Alloc(attr,style).alloc;
-
 exports.default = function (p) {
     return function (_ref) {
         var alloc = _ref.alloc,
@@ -8813,11 +8808,6 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import Alloc from "../Alloc";
-// import attr from "./attr";
-// import style from "./style";
-// const alloc = new Alloc(attr,style).alloc;
-
 exports.default = function (p) {
     return function (_ref) {
         var post = _ref.post,
@@ -8853,11 +8843,6 @@ var _react = __webpack_require__(18);
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// import Alloc from "../Alloc";
-// import attr from "./attr";
-// import style from "./style";
-// const alloc = new Alloc(attr,style).alloc;
 
 exports.default = function (p) {
     return function (_ref) {
@@ -8927,8 +8912,6 @@ var allocs = new Map(componentypes.map(function (type) {
     })))))().alloc];
 }));
 
-console.log(allocs);
-
 var Root = function (_React$Component) {
     _inherits(Root, _React$Component);
 
@@ -8958,7 +8941,6 @@ var Root = function (_React$Component) {
             posts: [],
             post: null
         };
-
         return _this;
     }
 
@@ -13705,7 +13687,11 @@ var rendering = function rendering(brls) {
 
         if (brls) data.brls = brls;
         return _react2.default.createElement(Root, data);
-    }(__webpack_require__(235)("./view_" + _br.device + "/Root"), { br: { init: _br.init, cq: _br.cq, fin: _br.fin } }), document.getElementById("app"));
+    }(__webpack_require__(235)("./view_" + _br.device + "/Root"), {
+        br: { init: _br.init, cq: _br.cq, fin: _br.fin },
+
+        tv: window.tumblrVariable
+    }), document.getElementById("app"));
 };
 
 // import Root from "./lib/Root";

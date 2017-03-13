@@ -24,7 +24,12 @@ const rendering = brls => render(
 
     })(
         require(`./view_${device}/Root`),
-        {br:{init:init,cq:cq,fin:fin}}
+
+        {
+            br:{init:init,cq:cq,fin:fin},
+
+            tv:window.tumblrVariable
+        }
     ),
 
     document.getElementById("app")
