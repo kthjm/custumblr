@@ -17,9 +17,9 @@ export default {
 
             business:(e,clone,set,send) => {
 
-                console.log(e.target.dataset);
+                let {id} = e.target.dataset;
 
-                console.log(clone);
+                console.log(clone.posts.filter(post=>post.id==id)[0]);
 
             }
         }

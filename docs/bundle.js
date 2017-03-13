@@ -28802,10 +28802,12 @@ exports.default = {
         query: ["posts"],
 
         business: function business(e, clone, set, send) {
+            var id = e.target.dataset.id;
 
-            console.log(e.target.dataset);
 
-            console.log(clone);
+            console.log(clone.posts.filter(function (post) {
+                return post.id == id;
+            })[0]);
         }
     }]
 
@@ -28823,21 +28825,141 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var _transform = __webpack_require__(217);
+var defaultKeys = exports.defaultKeys = ["type", "id", "reblog-key", "date-gmt", "tags"];
 
-var _transform2 = _interopRequireDefault(_transform);
+var copyKeys = exports.copyKeys = {
+    quote: ["quote-text", "quote-source"],
+    text: [],
+    photo: ["photo-caption"],
+    video: ["video-player-500", "video-caption"],
+    audio: ["audio-player"],
+    link: ["link-text", "link-url"],
+    answer: [],
+    conversation: ["conversation-text", "conversation-title"],
+    regular: ["regular-body", "regular-title"]
+};
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var transformKeys = exports.transformKeys = {
+    quote: [],
+    text: [],
+    photo: ["photo"],
+    video: [],
+    audio: [],
+    link: [],
+    answer: [],
+    conversation: [],
+    regular: []
+};
 
-var jsonFetch = function jsonFetch(path) {
+var fns = exports.fns = _defineProperty({}, "photo", function photo(post) {
+    return function (arr) {
+
+        if (post.photos.length) post.photos.forEach(function (photo) {
+            return arr.push(photo_transform(photo));
+        });else arr.push(photo_transform(post));
+
+        return arr;
+    }([]);
+});
+
+var photo_transform = function photo_transform(photo) {
+    return function (obj) {
+
+        ["photo-url-1280", "photo-url-500", "height", "width"].forEach(function (key) {
+
+            obj[key] = photo[key];
+        });
+
+        return obj;
+    }({});
+};
+
+/***/ }),
+/* 217 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.jsonFetch = exports.transform = undefined;
+
+var _consts = __webpack_require__(216);
+
+var transform = exports.transform = function transform(post) {
+    return new Map([].concat([].concat(_consts.defaultKeys, _consts.copyKeys[post.type]).map(function (key) {
+        if (post[key]) return [key, post[key]];
+    }).filter(function (arr) {
+        return arr;
+    }), _consts.transformKeys[post.type].map(function (key) {
+        return [key, _consts.fns[key](post)];
+    }))).toObject();
+};
+
+var jsonFetch = exports.jsonFetch = function jsonFetch(path) {
     return fetch(path).then(function (res) {
         return res.text();
     }).then(function (text) {
         return JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf(";")));
     });
 };
+
+// module.exports = post => new Map([].concat(
+//
+//     [].concat(defaultKeys,copyKeys[post.type])
+//     .map(key=>{if(post[key]) return [key,post[key]]})
+//     .filter(arr=>arr),
+//
+//     transformKeys[post.type]
+//     .map(key=>[key,
+//         fns[key](post)
+//     ])
+//
+// )).toObject();
+
+
+// import Map from "collections/map";
+// "reblog-button",
+// "like-button"
+
+
+// let obj = {};
+// return obj;
+// [].concat(
+//     defaultKeys.map(key=>[key,post[key]]),
+//     transformKeys[post.type].map(key=>[key,fns[key](post)])
+// ).forEach(key_value=>{
+//     let [key,value] = key_value;
+//     obj[key] = value;
+// });
+//
+
+// defaultKeys.forEach(key=>{
+//     obj[key] = post[key];
+// });
+//
+// transformKeys[post.type].forEach(key=>{
+//     obj[key] = fns[key](post);
+// });
+
+/***/ }),
+/* 218 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _modules = __webpack_require__(217);
 
 exports.default = {
 
@@ -28868,18 +28990,16 @@ exports.default = {
 
                 if (clone.post) set("post", null);
 
-                if (num == clone.page) return send();
+                if (num <= clone.page) return send();
 
-                jsonFetch(location.pathname + "?format=json").then(function (json) {
+                (0, _modules.jsonFetch)(location.pathname + "?format=json").then(function (json) {
                     console.log(json);
                     json.posts.forEach(function (post) {
-                        return clone.posts.push((0, _transform2.default)(post));
+                        return clone.posts.push((0, _modules.transform)(post));
                     });
                     json.posts.forEach(function (post) {
-                        return console.log("\u2193" + post.type);
-                    });
-                    json.posts.forEach(function (post) {
-                        return console.log(post);
+                        console.log("\u2193" + post.type);
+                        console.log(post);
                     });
                     set("page", num);
                     send();
@@ -28934,9 +29054,9 @@ exports.default = {
                     return send();
                 }
 
-                jsonFetch(post_id + "?format=json").then(function (json) {
+                (0, _modules.jsonFetch)(post_id + "?format=json").then(function (json) {
                     console.log(json.posts[0]);
-                    set("post", (0, _transform2.default)(json.posts[0]));
+                    set("post", (0, _modules.transform)(json.posts[0]));
                     send();
                 }).catch(function (err) {
                     return console.log(err);
@@ -29077,115 +29197,6 @@ exports.default = {
 //
 // ))).catch(err=>console.error(err));
 
-module.exports = exports["default"];
-
-/***/ }),
-/* 217 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _transform_modules = __webpack_require__(218);
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var defaultKeys = ["type", "id", "reblog-key", "date-gmt", "tags"];
-
-var copyKeys = {
-    quote: ["quote-text", "quote-source"],
-    text: [],
-    photo: ["photo-caption"],
-    video: ["video-player-500", "video-caption"],
-    audio: ["audio-player"],
-    link: ["link-text", "link-url"],
-    answer: [],
-    conversation: ["conversation-text", "conversation-title"],
-    regular: ["regular-body", "regular-title"]
-};
-
-var transformKeys = {
-    quote: [],
-    text: [],
-    photo: ["photo"],
-    video: [],
-    audio: [],
-    link: [],
-    answer: [],
-    conversation: [],
-    regular: []
-};
-
-var fns = _defineProperty({}, "photo", function photo(post) {
-    return function (arr) {
-
-        if (post.photos.length) post.photos.forEach(function (photo) {
-            return arr.push((0, _transform_modules.photo_transform)(photo));
-        });else arr.push((0, _transform_modules.photo_transform)(post));
-
-        return arr;
-    }([]);
-});
-
-module.exports = function (post) {
-    return new Map([].concat([].concat(defaultKeys, copyKeys[post.type]).map(function (key) {
-        if (post[key]) return [key, post[key]];
-    }).filter(function (arr) {
-        return arr;
-    }), transformKeys[post.type].map(function (key) {
-        return [key, fns[key](post)];
-    }))).toObject();
-};
-
-// import Map from "collections/map";
-// "reblog-button",
-// "like-button"
-
-
-// let obj = {};
-// return obj;
-// [].concat(
-//     defaultKeys.map(key=>[key,post[key]]),
-//     transformKeys[post.type].map(key=>[key,fns[key](post)])
-// ).forEach(key_value=>{
-//     let [key,value] = key_value;
-//     obj[key] = value;
-// });
-//
-
-// defaultKeys.forEach(key=>{
-//     obj[key] = post[key];
-// });
-//
-// transformKeys[post.type].forEach(key=>{
-//     obj[key] = fns[key](post);
-// });
-
-/***/ }),
-/* 218 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-        value: true
-});
-exports.default = {
-
-        photo_transform: function photo_transform(photo) {
-                return function (obj) {
-
-                        ["photo-url-1280", "photo-url-500", "height", "width"].forEach(function (key) {
-
-                                obj[key] = photo[key];
-                        });
-
-                        return obj;
-                }({});
-        }
-
-};
 module.exports = exports["default"];
 
 /***/ }),
@@ -29423,9 +29434,6 @@ var _Posts2 = _interopRequireDefault(_Posts);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// const Post = require("./Component/Post");
-// const Posts = require("./Component/Posts");
-
 module.exports = function (props) {
             return function (_ref) {
                         var post = _ref.post,
@@ -29478,13 +29486,17 @@ module.exports = function (props) {
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _react = __webpack_require__(22);
 
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = function (props) {
+exports.default = function (props) {
     return function (_ref) {
         var posts = _ref.posts,
             cq = _ref.cq;
@@ -29507,6 +29519,36 @@ module.exports = function (props) {
         );
     }(props);
 };
+
+// module.exports = props => (({posts,cq})=>(
+//
+//     <div>
+//
+//         {posts.map(
+//
+//             post=>(
+//
+//                 <div
+//                     className="a_post"
+//                     data-id={post["id"]}
+//                     data-reblogKey={post["reblog-key"]}
+//                     key={`a_post_${post.id}`}
+//                     onClick={cq}
+//                 >
+//                     {post.id}
+//
+//                 </div>
+//
+//             )
+//
+//         )}
+//
+//     </div>
+//
+// ))(props)
+
+
+module.exports = exports["default"];
 
 /***/ }),
 /* 226 */
@@ -29725,7 +29767,7 @@ webpackContext.id = 229;
 
 var map = {
 	"./_dom/rc": 215,
-	"./_path/rc": 216,
+	"./_path/rc": 218,
 	"./_react/rc": 219,
 	"./_window/rc": 220
 };

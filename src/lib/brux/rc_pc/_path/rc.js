@@ -1,15 +1,4 @@
-import transform from "./transform";
-
-const jsonFetch = path => (
-
-    fetch(path)
-    .then(res=>res.text())
-    .then(text=>JSON.parse(text.slice(
-        text.indexOf("{"),
-        text.lastIndexOf(";")
-    )))
-
-);
+import {transform,jsonFetch} from "./modules";
 
 export default {
 
@@ -41,14 +30,16 @@ export default {
 
                 if(clone.post) set("post",null);
 
-                if(num == clone.page) return send();
+                if(num <= clone.page) return send();
 
                 jsonFetch(`${location.pathname}?format=json`)
                 .then(json=>{
                     console.log(json);
                     json.posts.forEach(post=>clone.posts.push(transform(post)));
-                    json.posts.forEach(post=>console.log(`↓${post.type}`));
-                    json.posts.forEach(post=>console.log(post));
+                    json.posts.forEach(post=>{
+                        console.log(`↓${post.type}`);
+                        console.log(post);
+                    });
                     set("page",num);
                     send();
                 }).catch(err=>console.log(err));
